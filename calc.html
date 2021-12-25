@@ -1,0 +1,55 @@
+<html>
+    <script>
+        var scriptLoaded = false;
+    </script>
+    <script src="/calc/arizona.js" onload="scriptLoaded = true;"></script>
+    <script>
+        checkLoaded = () => {
+            if (!scriptLoaded) { 
+                document.getElementById("finalButton").setAttribute("disabled", true)
+                document.getElementById("finalButton").value = "Скрипт сайта не был загружен"
+                alert("Скрипт сайта не был загружен. Возможно, у вас устаревший браузер, либо сейчас ведутся тех. работы")
+            }
+        }
+    </script>
+    <head>
+        <body onload="checkLoaded(); setDefaultParameters();" id="lolBody">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+         <style>
+            a { 
+                text-decoration: none; 
+            } 
+            #copy {
+                width: 10em;  height: 2em;
+            }
+            .copyButton {padding: 10px 24px;}
+        </style>
+       <meta charset="utf-8" /> 
+       <meta http-equiv="Cache-Control" content="no-cache">
+       <title>Калькулятор налога</title>
+       <iframe name="formAccept" id="formAccept" style="display: none;"></iframe> 
+       <center>
+       <form target="formAccept" id="lolForm"> 
+       <br><input id="tax" min="1" max="104000" type="number" placeholder="Налог имущества" style="width: 10em" required />
+       <input id="taxInHour" min="1" type="number" placeholder="Налог в час" style="width: 10em" required /></br>
+       <br><input type="radio" id="onHouse" name="radiobutton" onclick="checkTaxForSetMax();" checked required/>На дом</br>
+       <br><input type="radio" id="onBiz" name="radiobutton" onclick="checkTaxForSetMax();" required/>На бизнес</br>
+       <br><input type="submit" id="finalButton" onclick="getTimeOfSale();" value="Узнать время до слета"/></br>
+       <br>Считать с:</br>
+       <br><input type="radio" id="currentTime" name="time" onclick="disabledDate(true); RequiredDate(false);" checked required/>Текущего времени
+       <input type="radio" id="customDate" name="time" onclick="disabledDate(false); RequiredDate(true);" required/>Определенной даты</br>
+       <br>
+       <input type="date" id="inputDate" disabled required/> 
+         <select name="to" id="inputTime" disabled required>
+            <option value="">Выберите время..</option>
+        </select>
+       </br>
+       </form>
+       <div id="result"></div>
+       <div id="result2"></div>
+       <div id="copy"></div>
+       <br>© <a href="https://vk.com/kizzn">kizn</a> - 2020</br>
+       </center>
+       </body>
+    </head>
+</html>
