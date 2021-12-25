@@ -89,9 +89,9 @@ function isNumberInBetween(number, type) {
     }
 }
 
-if (window.location.host !== "kizn.fun") {
-    document.writeln("<script>alert(\"Сайт был украден у kizn'a, лучшего скриптера на всем свете\"); location.href = \"https://vk.com/kizzn\"</script>")
-}
+// if (window.location.host !== "kizn.fun") {
+//     document.writeln("<script>alert(\"Сайт был украден у kizn'a, лучшего скриптера на всем свете\"); location.href = \"https://vk.com/kizzn\"</script>")
+// } похуй
 
 function getTaxType() {
     var radioHouse = document.getElementById("onHouse");
