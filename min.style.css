@@ -44,11 +44,11 @@ body {
 	display: inline-block;
 }
 
-[class~=headlineControl] {
+#headlineControl {
 	font-size: 13px;
 }
 
-[class~=headlineControl] {
+#headlineControl {
 	color: white;
 }
 
