@@ -66,7 +66,7 @@ function preloader() {
 
 function newRecordX() {
     typeChat(_0xc22f[5]);
-    document.getElementById('aBusterenkoTakoiVsm').innerText = readout + 's';
+    document.getElementById('recordElement').innerText = readout + 's';
     document[_0xc22f[9]](_0xc22f[8])[_0xc22f[7]][_0xc22f[6]] = _0xc22f[10];
     document[_0xc22f[9]](_0xc22f[12])[_0xc22f[11]] = readout + _0xc22f[13];
     setTimeout(_0xc22f[14], 1500);
