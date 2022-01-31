@@ -1,5 +1,5 @@
 function bebrochka() {
-    let link = `kizn.fun/zoom?code=${document.getElementById('identificator').value}&psswd=${document.getElementById('code').value}`
+    let link = `${location.host}/zoom.html?code=${document.getElementById('identificator').value}&psswd=${document.getElementById('code').value}`
     document.getElementById('generated').innerHTML = 
     `<a href='https://${link}'>${link}</a>`;
     document.getElementById('copy').style.display = 'block';
