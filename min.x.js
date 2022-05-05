@@ -74,12 +74,12 @@ function newRecordX() {
 }
 
 function typeChat(_0xb162x6) {
-    // addValid = Math[_0xc22f[16]](Math[_0xc22f[15]]() * (10 - 1) + 1);
+    addValid = Math[_0xc22f[16]](Math[_0xc22f[15]]() * (10 - 1) + 1);
     document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] = document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] + _0xb162x6 + _0xc22f[19];
     document[_0xc22f[9]](_0xc22f[18])[_0xc22f[20]] = 450000 * 100 * 3;
-    // if (addValid == 2 || addValid == 1) {
-    //     document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] = document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] + _0xc22f[21] + _0xc22f[19]
-    // }
+    if (addValid == 2 || addValid == 1) {
+        document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] = document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] + "Вы можете заказать любой скрипт по вашему усмотрению для RakBot или GTA:SA. Подробнее в конце сайта (СКРИПТЫ НА ЗАКАЗ)\n"
+    }
 }
 
 function changeKey() {
