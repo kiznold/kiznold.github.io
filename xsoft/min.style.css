@@ -3,7 +3,7 @@
 	src: url("6353.ttf") format("opentype");
 }
 
-#control, .changeKey {
+#control, #changeKey {
 	display: block;
     width: 14.375pc;
     background: #1c1c1c;
@@ -16,7 +16,7 @@
 	padding-top: .3125pc;
 }
 
-.changeKey {
+#changeKey {
     top: 110.5px;
 }
 
@@ -892,13 +892,13 @@ button {
 	font-family: gta;
 }
 
-[class~=hideControl],
+[id~=hideControl],
 #openControl,
 [class~=contactA],
 .rights,
 #payday,
 #record,
-[class~=changeKey] {
+[id~=changeKey] {
 	position: absolute;
 }
 
@@ -944,8 +944,8 @@ button {
 
 #record,
 button,
-[class~=changeKey],
-[class~=hideControl],
+[id~=changeKey],
+[id~=hideControl],
 .rights,
 [class~=contactA]:hover,
 #openControl,
@@ -1027,11 +1027,11 @@ button,
 	padding-top: .072916667in;
 } */
 
-[class~=changeKey] {
+[id~=changeKey] {
 	background: rgba(0, 0, 0, .6);
 }
 
-[class~=changeKey] {
+[id~=changeKey] {
 	transition-duration: .3s;
 }
 
@@ -1078,7 +1078,7 @@ button,
 	font-size: .75pc;
 }
 
-[class~=hideControl] {
+[id~=hideControl] {
 	font-size: .9375pc;
 }
 
@@ -1122,7 +1122,7 @@ button {
 	transform: scale(1.1) translateY(-5px);
 }
 
-[class~=changeKey]:hover {
+[id~=changeKey]:hover {
 	background: rgba(0, 0, 0, 1);
 }
 
