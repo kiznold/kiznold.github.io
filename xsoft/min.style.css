@@ -1,23 +1,34 @@
+
 @font-face {
 	font-family: gta;
 	src: url("6353.ttf") format("opentype");
 }
 
-#control, #changeKey {
+#control {
 	display: block;
     width: 14.375pc;
     background: #1c1c1c;
     position: absolute;
     top: .3125in;
-	padding-left: .3125pc;
-    padding-bottom: .3125pc;
-    right: 2%;
-    padding-right: .3125pc;
-	padding-top: .3125pc;
+		right: 2%;
+	padding: .3125pc;
 }
 
 #changeKey {
-    top: 110.5px;
+	position: absolute;
+	background: #1c1c1c;
+	margin-top: 8px;
+	padding: .3125pc;
+	/* width: 14.375pc; */
+	/* width: 100%; */
+	/* right: 2%; */
+	/* 
+		top: .3125in;
+	padding-left: .3125pc;
+		padding-bottom: .3125pc;
+		right: 2%;
+		padding-right: .3125pc;
+	padding-top: .3125pc; */
 }
 
 input:focus,
