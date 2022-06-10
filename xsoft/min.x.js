@@ -571,154 +571,80 @@ function chatStr() {
     chatAIdRand = Math['floor'](Math['random']() * (1001 - 1) + 1);
     chatNameRand = Math['floor'](Math['random']() * (5 - 1) + 1);
     nameCHR = 'Alexey_Goldromanov';
-    if (chatNameRand == 2) {
-        nameCHR = 'Teor_New'
-    };
-    if (chatNameRand == 3) {
-        nameCHR = 'Teor_Old'
-    };
-    if (chatNameRand == 4) {
-        nameCHR = 'Oleg_Vasilievich'
-    };
+    let randomNames = [
+        , ,
+        'Teor_New',
+        'Teor_Old',
+        'Oleg_Vasilievich'
+    ]
+    nameCHR = randomNames[chatNameRand] ? randomNames[chatNameRand] : nameCHR
     chatNameAdminRand = Math['floor'](Math['random']() * (5 - 1) + 1);
     nameCHAR = 'Alexey_Goldromanov';
-    if (chatNameAdminRand == 2) {
-        nameCHAR = 'Teor_New'
-    };
-    if (chatNameAdminRand == 3) {
-        nameCHAR = 'Teor_Old'
-    };
-    if (chatNameAdminRand == 4) {
-        nameCHAR = 'Oleg_Vasilievich'
-    };
+    nameCHAR = randomNames[chatNameAdminRand] ? randomNames[chatNameAdminRand] : nameCHAR
     banValue = Math['floor'](Math['random']() * (8 - 1) + 1);
     banReason = 'пидорас';
-    if (banValue == 2) {
-        banReason = 'читы'
-    };
-    if (banValue == 3) {
-        banReason = 'лох'
-    };
-    if (banValue == 4) {
-        banReason = 'ку от Павлова'
-    };
-    if (banValue == 5) {
-        banReason = 'до выяснений'
-    };
-    if (banValue == 6) {
-        banReason = 'телепорт'
-    };
-    if (banValue == 7) {
-        banReason = 'бот'
-    };
+    let banReasons = [
+        , ,
+        'читы',
+        'лох',
+        'ку от Павлова',
+        'до выяснений',
+        'телепорт',
+        'бот'
+    ]
+    banReason = banReasons[banValue] ? banReasons[banValue] : banReason
     adValue = Math['floor'](Math['random']() * (16 - 1) + 1);
     adText = 'Куплю мозг. Цена договорная';
-    if (adValue == 2) {
-        adText = 'Продам девственность. Звоните'
-    };
-    if (adValue == 3) {
-        adText = 'Куплю дом в г.Лас-Вентурас. Бюджет: 500.000'
-    };
-    if (adValue == 4) {
-        adText = 'Ищу девушку для с/о. О себе: большой'
-    };
-    if (adValue == 5) {
-        adText = 'Продам м/ц марки NGR-500 с пакетом ТТ. Цена договорная'
-    };
-    if (adValue == 6) {
-        adText = 'Продам дом возле больницы г.Лос-Сантос. Звоните'
-    };
-    if (adValue == 7) {
-        adText = 'Семья X Gang ищет родственников. Ждем вас у маяка.'
-    };
-    if (adValue == 8) {
-        adText = 'Продам дом  г.Сан-Фиерро с трех местным гаражом. Звоните'
-    };
-    if (adValue == 9) {
-        adText = 'Куплю автомобиль любой марки. Цена договорная'
-    };
-    if (adValue == 10) {
-        adText = 'Куплю а/с Бумбокс. Цена договорная'
-    };
-    if (adValue == 11) {
-        adText = 'Продам а/с Скейт.Цена 6.000.000'
-    };
-    if (adValue == 12) {
-        adText = 'Ищу друга с майкой Дискорд'
-    };
-    if (adValue == 13) {
-        adText = 'Идет набор в правительство. Ждем вас в холле'
-    };
-    if (adValue == 14) {
-        adText = 'Куплю бизнес любого типа. Звоните'
-    };
-    if (adValue == 15) {
-        adText = 'Продам бизнес Ларек. 20.000.000'
-    };
+    let adValues = [
+        , ,
+        'Продам девственность. Звоните',
+        'Куплю дом в г.Лас-Вентурас. Бюджет: 500.000',
+        'Ищу девушку для с/о. О себе: большой',
+        'Продам м/ц марки NGR-500 с пакетом ТТ. Цена договорная',
+        'Продам дом возле больницы г.Лос-Сантос. Звоните',
+        'Семья X Gang ищет родственников. Ждем вас у маяка.',
+        'Продам дом  г.Сан-Фиерро с трех местным гаражом. Звоните',
+        'Куплю автомобиль любой марки. Цена договорная',
+        'Куплю а/с Бумбокс. Цена договорная',
+        'Продам а/с Скейт.Цена 6.000.000',
+        'Ищу друга с майкой Дискорд',
+        'Идет набор в правительство. Ждем вас в холле',
+        'Куплю бизнес любого типа. Звоните',
+        'Продам бизнес Ларек. 20.000.000'
+    ]
+    adText = adValues[adValue] ? adValues[adValue] : adText
     vrValue = Math['floor'](Math['random']() * (16 - 1) + 1);
     vrText = 'Админы пидорасы';
-    if (vrValue == 2) {
-        vrText = 'Кто лох + в чат'
-    };
-    if (vrValue == 3) {
-        vrText = '+'
-    };
-    if (vrValue == 4) {
-        vrText = 'Закупайтесь только в 24 7 ид 1337, самые высокие цены'
-    };
-    if (vrValue == 5) {
-        vrText = 'Какой дом слетел в тот пд?'
-    };
-    if (vrValue == 6) {
-        vrText = 'Куплю НРГ ТТ за 47к, звоните(чат не читаю)'
-    };
-    if (vrValue == 7) {
-        vrText = 'Идет набор в фаму. Все улучшения не куплены'
-    };
-    if (vrValue == 8) {
-        vrText = 'Оставьте бездомному дедульке немного денег и вам вернется в 10 раз больше'
-    };
-    if (vrValue == 9) {
-        vrText = 'Вы находились в долгом пути! Хочется покушать? Заезжайте к ларьку около якудзы(финдибиз 1337)'
-    };
-    if (vrValue == 10) {
-        vrText = 'скупаю на цр монетки по 9к'
-    };
-    if (vrValue == 11) {
-        vrText = 'Продам,либо обменяю газонокасилку тт нг 100кк торг'
-    };
-    if (vrValue == 12) {
-        vrText = 'Куплю НРГ ТТ . Бюджет 42кк'
-    };
-    if (vrValue == 13) {
-        vrText = 'Продам дом возле Автосалона СФ без гаража'
-    };
-    if (vrValue == 14) {
-        vrText = 'Аренда Лимузинов покатался верни обратно на Аренду порадуй Себя и Меня (желающих много)'
-    };
-    if (vrValue == 15) {
-        vrText = 'Хотите Сыграть В Орла Решку. То Едте В Бар 228, Ставки До 600К ( /Финдибиз 228 ).'
-    };
+    let vrTexts = [
+        , ,
+        'Кто лох + в чат',
+        '+',
+        'Закупайтесь только в 24 7 ид 1337, самые высокие цены',
+        'Какой дом слетел в тот пд?',
+        'Куплю НРГ ТТ за 47к, звоните(чат не читаю)',
+        'Идет набор в фаму. Все улучшения не куплены',
+        'Оставьте бездомному дедульке немного денег и вам вернется в 10 раз больше',
+        'Вы находились в долгом пути! Хочется покушать? Заезжайте к ларьку около якудзы(финдибиз 1337)',
+        'скупаю на цр монетки по 9к',
+        'Продам,либо обменяю газонокасилку тт нг 100кк торг',
+        'Куплю НРГ ТТ . Бюджет 42кк',
+        'Продам дом возле Автосалона СФ без гаража',
+        'Аренда Лимузинов покатался верни обратно на Аренду порадуй Себя и Меня (желающих много)',
+        'Хотите Сыграть В Орла Решку. То Едте В Бар 228, Ставки До 600К ( /Финдибиз 228 ).'
+    ]
+    vrText = vrTexts[vrValue] ? vrTexts[vrValue] : vrText
     textValue = Math['floor'](Math['random']() * (8 - 1) + 1);
     textText = 'qq';
-    if (textValue == 2) {
-        textText = 'Х GANG the best'
-    };
-    if (textValue == 3) {
-        textText = 'Josip top'
-    };
-    if (textValue == 4) {
-        textText = 'Продам монетки!!!'
-    };
-    if (textValue == 5) {
-        textText = 'Куплю подарки'
-    };
-    if (textValue == 6) {
-        textText = 'Дайте денег пж'
-    };
-    if (textValue == 7) {
-        textText = 'Я акуленок туруруруру'
-    };
+    let textValues = [
+        , ,
+        'Х GANG the best',
+        'Josip top',
+        'Продам монетки!!!',
+        'Куплю подарки',
+        'Дайте денег пж',
+        'Я акуленок туруруруру'
+    ]
+    textText = textValues[textValue] ? textValues[textValue] : textText
     if (chatStrValue == 1) {
         
         typeChat('Администратор ' + nameCHAR + '[' + chatAIdRand + '] забанил игрока ' + nameCHR + '[' + chatIdRand + '] на 30 дней. Причина: ' + banReason)
