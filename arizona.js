@@ -1,11 +1,10 @@
-var homeNalog = 104000;
-var bizNalog = 250000;
-
-var dayDeclension = new Array("день", "дня", "дней");
-var hourDeclension = new Array("час", "часа", "часов");
+const homeNalog = 104000;
+const bizNalog = 250000;
 
 var b = document.createElement("b");
 var copyButton = document.createElement("input")
+
+var strahov_ochka = false;
 
 function RequiredDate(boolVal) {
     boolVal ? setRequiredDate() : offRequiredDate();
@@ -25,10 +24,11 @@ function setDefaultParameters() {
     for ( var i = 0; i<=23; i++ ) {
         document.getElementById("inputTime").add(new Option(i + ":00", i), undefined)
     }
+    document.getElementById("shit").innerHTML += "-"+new Date().getFullYear();
 }
 
 function copiedState() {
-    if (typeof document.getElementById("copyButton") != 'undefined' && document.getElementById("copyButton") != null) {
+    if (document.getElementById("copyButton")) {
         document.getElementById("copyButton").setAttribute("disabled", true)
         document.getElementById("copyButton").setAttribute("value", "Скопировано!")
         setTimeout(() => {    
@@ -53,8 +53,7 @@ function isValidDate(d) {
 }
 
 function customDateCheck() {
-    if (document.getElementById("customDate").checked && document.getElementById("inputTime").value != "" && document.getElementById("inputDate").value != "") { return true }
-    else { return false }
+	return document.getElementById("customDate").checked && document.getElementById("inputTime").value != "" && document.getElementById("inputDate").value != ""
 }
 
 function disabledDate(valbool) {
@@ -76,75 +75,31 @@ function checkTaxForSetMax() {
 }
 
 function isNumberInBetween(number, type) {
-    if (type == "biz") {
-        if (number > bizNalog)
-            return false
-        else if (number <= bizNalog)
-            return true
-    } else if (type == "home") {
-        if (number > homeNalog)
-            return false
-        else if (number <= homeNalog)
-            return true
-    }
+    // if (type == "biz") {
+    //     if (number > bizNalog)
+    //         return false
+    //     else if (number <= bizNalog)
+    //         return true
+    // } else if (type == "home") {
+    //     if (number > homeNalog)
+    //         return false
+    //     else if (number <= homeNalog)
+    //         return true
+    // }
+    return (type == "biz") ? number <= bizNalog : number <= homeNalog
 }
 
-// if (window.location.host !== "kizn.fun") {
-//     document.writeln("<script>alert(\"Сайт был украден у kizn'a, лучшего скриптера на всем свете\"); location.href = \"https://vk.com/kizzn\"</script>")
-// } похуй
-
 function getTaxType() {
-    var radioHouse = document.getElementById("onHouse");
-    var radioBiz = document.getElementById("onBiz");
-    if (radioHouse.checked) { return "home" }
-    else if (radioBiz.checked) { return "biz" }
+	return document.getElementById("onHouse")?.checked ? "home" : "biz"
 }
 
 function getTaxAmount() {
-    var radioHouse = document.getElementById("onHouse");
-    var radioBiz = document.getElementById("onBiz");
-    if (radioHouse.checked) { return homeNalog }
-    else if (radioBiz.checked) { return bizNalog }
-}
-
-function getLeftDeclension(val) {
-    var stringedHour = val.toString();
-    var lastDigit = stringedHour.charAt(stringedHour.length-1);
-    var nmbrLastDigit = parseInt(lastDigit)
-    if (nmbrLastDigit == 1) return " остался "
-    else if (nmbrLastDigit > 1) return " осталось "
-    else return " осталось "
-}
-
-function getHourDeclension(hourVal) {
-    if (parseInt(hourVal) == 11) { return hourDeclension[2] } else {
-    var stringedHour = hourVal.toString();
-    var lastDigit = stringedHour.charAt(stringedHour.length-1);
-    var nmbrLastDigit = parseInt(lastDigit)
-    if (nmbrLastDigit == 0) return hourDeclension[2]
-    else if (nmbrLastDigit == 1) return hourDeclension[0]
-    else if (nmbrLastDigit == 2 || nmbrLastDigit == 3 || nmbrLastDigit == 4) return hourDeclension[1]
-    else if (nmbrLastDigit > 4) return hourDeclension[2]
-    else return "ч."
-    }
-}
-
-function getDayDeclension(dayVal) {
-    if (parseInt(dayVal) == 11) { return dayDeclension[2] } else {
-    var stringedDay = dayVal.toString();
-    var lastDigit = stringedDay.charAt(stringedDay.length-1);
-    var nmbrLastDigit = parseInt(lastDigit)
-    if (nmbrLastDigit == 0) return dayDeclension[2]
-    else if (nmbrLastDigit == 1) return dayDeclension[0]
-    else if (nmbrLastDigit == 2 || nmbrLastDigit == 3 || nmbrLastDigit == 4) return dayDeclension[1]
-    else if (nmbrLastDigit > 4) return dayDeclension[2]
-    else return "д."
-    }
+	return document.getElementById("onHouse")?.checked ? homeNalog : bizNalog
 }
 
 function getCorrectNumber(hours) {
     if (hours > 24) {
-        return "или [" + Math.floor(hours/24) + "] " + getDayDeclension(Math.floor(hours/24)) + " [" + hours % 24 + "] " + getHourDeclension(hours%24)
+        return "или [" + Math.floor(hours/24) + "] д. [" + hours % 24 + "] ч."
     }
     if (hours % 24 == hours) return ""
 }
@@ -157,8 +112,7 @@ function getCorrectInfoText() {
 function AreInputsDateCorrect() {
     var dateInput = document.getElementById("inputDate")
     var timeInput = document.getElementById("inputTime")
-    if (dateInput.validity.valid && timeInput.validity.valid) { return true }
-    else { return false }
+    return dateInput.validity.valid && timeInput.validity.valid
 }
 
 function getTimeOfSale() {
@@ -169,11 +123,13 @@ function getTimeOfSale() {
     var resultDate = document.getElementById("result2");
     var dateCustom = document.getElementById("customDate")
     var radiobtns = document.getElementsByName("radiobutton");
+
     if ( (radiobtns[0].checked || radiobtns[1].checked) && tax.validity.valid && taxInHour.validity.valid && isNumberInBetween(tax.value, getTaxType()) && tax.value > 0 && taxInHour.value > 0 && dateCustom.checked ? AreInputsDateCorrect() : 1 ) {
         // -- \\
         var currentDate = 0;
+        var eptaNalog = (!strahov_ochka) ? taxInHour.value * 2 : taxInHour.value
         // -- All variables -- \\
-        var hours = (getTaxAmount() - tax.value) / taxInHour.value; 
+        var hours = (getTaxAmount() - tax.value) / eptaNalog; 
         if (document.getElementById("currentTime").checked) {
         var currentDate = new Date(Date.now() + (new Date().getTimezoneOffset() + 3 * 60) * 1000 * 60);
         // currentDate.setDate(currentDate.getDate() + Math.floor(hours/24))
@@ -190,11 +146,11 @@ function getTimeOfSale() {
 
             if (Math.sign(Math.ceil(hours)) == 1) {
                 var infoDate = currentDate.toLocaleDateString("ru-RU") + " " + currentDate.getHours() + ":00]"
-                var firstText = "До слета" + getLeftDeclension(Math.ceil(hours)) + "[" + Math.ceil(hours) + "] " + getHourDeclension(Math.ceil(hours)) + " " + getCorrectNumber(Math.ceil(hours));
+                var firstText = "До слета [" + Math.ceil(hours) + "] ч. " + getCorrectNumber(Math.ceil(hours));
                 var secondText = "Дата слета " + getCorrectInfoText() + infoDate
                 customDateCheck() ? result.innerHTML = "" : result.innerHTML = firstText
                 resultDate.innerHTML = secondText
-
+                // лень переписывать это говно 11.05.2022
                 b.innerText = " МСК"
                 resultDate.appendChild(b)
 

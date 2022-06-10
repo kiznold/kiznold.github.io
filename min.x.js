@@ -74,12 +74,12 @@ function newRecordX() {
 }
 
 function typeChat(_0xb162x6) {
-    // addValid = Math[_0xc22f[16]](Math[_0xc22f[15]]() * (10 - 1) + 1);
+//     addValid = Math[_0xc22f[16]](Math[_0xc22f[15]]() * (10 - 1) + 1);
     document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] = document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] + _0xb162x6 + _0xc22f[19];
     document[_0xc22f[9]](_0xc22f[18])[_0xc22f[20]] = 450000 * 100 * 3;
-    // if (addValid == 2 || addValid == 1) {
-    //     document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] = document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] + _0xc22f[21] + _0xc22f[19]
-    // }
+//     if (addValid == 2 || addValid == 1) {
+//         document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] = document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] + "Вы можете заказать любой скрипт по вашему усмотрению для RakBot или GTA:SA. Подробнее в конце сайта (СКРИПТЫ НА ЗАКАЗ)\n"
+//     }
 }
 
 function changeKey() {
@@ -146,7 +146,7 @@ function modeN() {
             };
             logX(_0xc22f[45]);
             typeChat(_0xc22f[46]);
-            typeChat('Внимание! Сайт переехал на новый домен, учтите это. Совсем скоро старый домен kizn.fun перестанет работать.');
+            //typeChat('Внимание! Сайт переехал на новый домен, учтите это. Совсем скоро старый домен kizn.fun перестанет работать.');
             mode = 0;
             logX(_0xc22f[47] + mode);
             document[_0xc22f[9]](_0xc22f[48])[_0xc22f[7]][_0xc22f[6]] = _0xc22f[36]
@@ -1063,6 +1063,10 @@ function captchaClose(_0xb162x3a) {
         }
     };
     if (captchaValid) {
+        let reklama = Math.floor(Math.random() * (10 - 1) + 1);
+        if (reklama == 3) {
+            document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] = document[_0xc22f[9]](_0xc22f[18])[_0xc22f[17]] + "Вы можете заказать любой скрипт по вашему усмотрению для RakBot или GTA:SA. Подробнее в конце сайта (СКРИПТЫ НА ЗАКАЗ)\n";
+        };
         typeChat(_0xc22f[287] + morgen + _0xc22f[288] + captchaData + _0xc22f[289] + readout + timeReact + _0xc22f[290] + firstSymbol);
         if (record) {
             if (ds < rds) {

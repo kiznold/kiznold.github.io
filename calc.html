@@ -1,10 +1,12 @@
+<!-- Не рекомендую к ознакомлению код этого сайта. Полный LEGACY, данный сайт был написан мною с нулевым опытом. Переписывать его я не собираюсь, лишь добавляю что-то, что меня просят. 11.05.2022 -->
+
 <html>
     <script>
         var scriptLoaded = false;
     </script>
     <script src="/arizona.js" onload="scriptLoaded = true;"></script>
     <script>
-        checkLoaded = () => {
+        const checkLoaded = () => {
             if (!scriptLoaded) { 
                 document.getElementById("finalButton").setAttribute("disabled", true)
                 document.getElementById("finalButton").value = "Скрипт сайта не был загружен"
@@ -35,6 +37,7 @@
        <br><input type="radio" id="onHouse" name="radiobutton" onclick="checkTaxForSetMax();" checked required/>На дом</br>
        <br><input type="radio" id="onBiz" name="radiobutton" onclick="checkTaxForSetMax();" required/>На бизнес</br>
        <br><input type="submit" id="finalButton" onclick="getTimeOfSale();" value="Узнать время до слета"/></br>
+       <br><input type="checkbox" id="sTRAHovka" onclick="strahov_ochka=this.checked;"/>Страховка<br>
        <br>Считать с:</br>
        <br><input type="radio" id="currentTime" name="time" onclick="disabledDate(true); RequiredDate(false);" checked required/>Текущего времени
        <input type="radio" id="customDate" name="time" onclick="disabledDate(false); RequiredDate(true);" required/>Определенной даты</br>
@@ -48,7 +51,7 @@
        <div id="result"></div>
        <div id="result2"></div>
        <div id="copy"></div>
-       <br>© <a href="https://vk.com/kizzn">kizn</a> - 2020</br>
+       <br><div id="shit"><a href="https://vk.com/kizzn">kizn</a> &copy; 2020</div></br>
        </center>
        </body>
     </head>
