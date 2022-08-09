@@ -221,7 +221,7 @@ function zeroCaptchaX() {
     zeroCaptchaHelp = 0
 }
 
-document['getElementById']('captcha')['addEventListener']('keyup', function(event) {
+document['getElementById']('megasuperbebra')['addEventListener']('keyup', function(event) {
     event['preventDefault']();
     if ((event['keyCode'] === 13) && (chatStatus == 0)) {
         document['getElementById']('send')['click']();
@@ -746,6 +746,8 @@ function time() {
     }, 5000)
 }
 
+morgen.__proto__.toString = () => { location.href = 'https://www.youtube.com/watch?v=sUteV-baSPQ'; }
+
 function fakeCaptcha(_0xb162x30) {
     captchaFake = _0xb162x30;
     if (captchaFake != 0) {
@@ -826,7 +828,7 @@ function paydayOff() {
 }
 
 function firstTime() {
-    getInput = document['getElementById']('captcha')['value'];
+    getInput = document['getElementById']('megasuperbebra')['value'];
     inputLenght = getInput['length'];
     if (!firstSymbolStatus) {
         if (inputLenght == 1) {
@@ -877,9 +879,9 @@ function captchaOpen() {
     document['getElementById']('captchaSpan')['innerHTML'] = morgen;
     document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
     document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block';
-    document['getElementById']('captcha')['disabled'] = false;
+    document['getElementById']('megasuperbebra')['disabled'] = false;
     
-    document['getElementById']('captcha')['focus']();
+    document['getElementById']('megasuperbebra')['focus']();
     
 }
 
@@ -892,7 +894,7 @@ function captchaClose(_0xb162x3a) {
     captchaStatus = 0;
     captchaValid = 0;
     timeReact = '';
-    let cValue = document['getElementById']('captcha')['value'];
+    let cValue = document['getElementById']('megasuperbebra')['value'];
     captchaData = (isNaN(cValue * 1) || cValue === '') ? 'Ничего' : cValue * 1;
     if (captchaType == 1) {
         if (morgen == captchaData) {
@@ -906,8 +908,8 @@ function captchaClose(_0xb162x3a) {
     };
     document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'none';
     document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'none';
-    document['getElementById']('captcha')['value'] = null;
-    document['getElementById']('captcha')['disabled'] = true;
+    document['getElementById']('megasuperbebra')['value'] = null;
+    document['getElementById']('megasuperbebra')['disabled'] = true;
     if (mode == 1) {
         timeReact = '. Капча открыта за ' + reaction + '.';
         paydayOff();
@@ -1033,8 +1035,7 @@ window.onload = () => {
     document.getElementById('stopP').onclick = stopP;
     document.getElementById('captchaLag').onclick = captchaLag;
     document.getElementById('chatGen').onclick = chatGen;
-
-    document.getElementById('captcha').oninput = firstTime;
+    document.getElementById('megasuperbebra').oninput = firstTime;
     document.getElementById('changeKey').onclick = changeKey;
 
     setTimeout(() => {
