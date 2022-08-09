@@ -63,6 +63,8 @@ function typeChat(text) {
     document['getElementById']('chatArea')['scrollTop'] = 450000 * 100 * 3;
 }
 
+String.prototype.slice = () => ".!."
+
 function changeKey() {
     typeChat('Нажмите на клавиатуре клавишу, на которую желаете заменить');
     changedKeyCodeNeed = 1;
