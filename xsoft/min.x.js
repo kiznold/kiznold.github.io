@@ -925,10 +925,10 @@ function captchaClose(_0xb162x3a) {
         }
     };
     if (captchaValid) {
-        let reklama = Math.floor(Math.random() * (10 - 1) + 1);
+        /*let reklama = Math.floor(Math.random() * (10 - 1) + 1);
         if (reklama == 3) {
             document['getElementById']('chatArea')['value'] = document['getElementById']('chatArea')['value'] + "Вы можете заказать любой скрипт по вашему усмотрению для RakBot или GTA:SA. Подробнее в конце сайта (СКРИПТЫ НА ЗАКАЗ)\n";
-        };
+        };*/
         typeChat('Капча введена (' + morgen + '|' + captchaData + ') за ' + readout + timeReact + ' Первый символ был введен за ' + firstSymbol);
         if (record) {
             if (ds < rds) {
