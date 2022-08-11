@@ -973,7 +973,7 @@
             }
         };
         if (!captchaValid) {
-            console.log(morgen)
+            //console.log(morgen)
             typeChat('Капча введена неверно (' + morgen + '|' + captchaData + ') за ' + readout + timeReact)
     
         };
