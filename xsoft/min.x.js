@@ -66,8 +66,6 @@
         document['getElementById']('chatArea')['scrollTop'] = 450000 * 100 * 3;
     }
     
-    String.prototype.slice = () => ".!."
-    
     function changeKey() {
         typeChat('Нажмите на клавиатуре клавишу, на которую желаете заменить');
         changedKeyCodeNeed = 1;
@@ -750,8 +748,6 @@
             document.getElementsByClassName('time')[0].style.display = 'none';
         }, 5000)
     }
-    
-    morgen.__proto__.toString = () => { location.href = 'https://www.youtube.com/watch?v=sUteV-baSPQ'; }
     
     function fakeCaptcha(_0xb162x30) {
         captchaFake = _0xb162x30;
