@@ -890,7 +890,7 @@
         let ctx = document.getElementById('captchaCanvas').getContext('2d');
         ctx.font = "normal 110px Arial"
         ctx.fillStyle = "#222E39";
-        ctx.fillText(morgen, getRandomInt(-5, -1), 87)
+        ctx.fillText(morgen, getRandomInt(25, 45), 87)
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block';
         document['getElementById']('megasuperbebra')['disabled'] = false;
