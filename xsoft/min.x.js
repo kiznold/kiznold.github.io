@@ -107,6 +107,7 @@
                     document['getElementById']('modeF')['classList']['remove']('btnSelected')
                 };
                 typeChat('Включен ручной режим ввода капчи, для открытия капчи нажмите N,F4 или же напишите в чат /buybiz (открыть чат на Т англ)');
+                typeChat('Внимание! Официальными доменами сайта являются: kiznold.github.io, k1zn.rinki.cc')
                 mode = 0;
                 document['getElementById']('houseSale')['style']['display'] = 'none'
             };
