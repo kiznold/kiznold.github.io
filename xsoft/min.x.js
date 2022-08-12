@@ -96,6 +96,7 @@
     
     function modeN() {
         if (!modeChange) {
+            if (document.body.style.background == '#454545') document.body.style.background='#383838';
             if (!chatGenerator) {
                 document['getElementById']('chatGen')['style']['display'] = 'none';
                 document['getElementById']('stopP')['style']['display'] = 'none';
@@ -121,6 +122,7 @@
     
     function modeP() {
         if (!modeChange) {
+            if (document.body.style.background == '#454545') document.body.style.background='#383838';
             paydayAutoStatus = 0;
             document['getElementById']('chatGen')['style']['display'] = 'inline-block';
             document['getElementById']('stopP')['style']['display'] = 'inline-block';
@@ -142,6 +144,7 @@
     
     function modeF() {
         if (!modeChange) {
+            if (document.body.style.background == '#454545') document.body.style.background='#383838';
             if (!chatGenerator) {
                 if (captchaLagStatus == 1) {
                     captchaLag()
