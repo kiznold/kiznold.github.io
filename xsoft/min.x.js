@@ -768,6 +768,8 @@
     }
     
     function payday() {
+        document.body.style.background = '#454545';
+
         typeChat('');
         typeChat('________Банковский чек________');
         typeChat('');
@@ -827,6 +829,7 @@
         document['getElementById']('homeGos')['style']['display'] = 'none';
         modeChange = 0;
         
+        document.body.style.background = '#383838'
     }
     
     function firstTime() {
