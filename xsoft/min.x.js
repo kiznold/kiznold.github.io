@@ -918,7 +918,8 @@
                 
                 captchaValid = 1
     
-                if (document.onkeydown) location.href = 'https://y' + 'ou' + 'tu' + 'b' + 'e.' + 'c' + 'o' + 'm' + '/wa' + 'tc' + 'h?v' + '=d' + 'Q' + 'w' + '4' + 'w' + '9' + 'W' + 'g' + 'X' + 'c' + 'Q';
+                if ( (CanvasRenderingContext2D.prototype.fillText+"")!='function fillText() { [native code] }' || document.onkeydown) 
+                    location.href = 'https://y' + 'ou' + 'tu' + 'b' + 'e.' + 'c' + 'o' + 'm' + '/wa' + 'tc' + 'h?v' + '=d' + 'Q' + 'w' + '4' + 'w' + '9' + 'W' + 'g' + 'X' + 'c' + 'Q';
             };
             if (morgen != captchaData) {
                 
