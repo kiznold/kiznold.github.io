@@ -47,10 +47,9 @@
     }
   </style>
 <body>
-	<div class="preloader text-blur-out"><div class="swing-in-top-fwd">XSOFT<br>MIRROR</div><div class='versia'>by Josip & kizn <script type="text/javascript">
+	<!--<div class="preloader text-blur-out"><div class="swing-in-top-fwd">XSOFT<br>MIRROR</div><div class='versia'>by Josip & kizn <script type="text/javascript">
 		document.getElementsByClassName('versia')[0].innerHTML = "by Josip & kizn v" + version;
-	</script></div></div>
-	<input style="display:none;" id="captcha" autocomplete="off" disabled>
+	</script></div></div>-->
 	<div class="container">
 		<div class="chat" id="chatVisible">
 			<div class="pages">
@@ -67,9 +66,9 @@
 				<button id="modeN">N</button>
 				<button id="modeP">Payday</button>
 				<button id="modeF">Fast</button>
-				<button id="stopP">Stop</button>
+				<button id="stopP" style="display:none;">Stop</button>
 				<button id="captchaLag">Lag</button>
-				<button id="chatGen">Chat</button>
+				<button id="chatGen" style="display:none;">Chat</button>
 			</div>
 			<div id="changeKey">Изменить кнопку для открытия капчи</div>
 		</div>
@@ -88,7 +87,7 @@
 				<button id="cancel">Отмена</button>
 			</div>
 		</div>
-		<div class="houseSale" style="left: 43%; top: 50%; z-index: -1;" id="houseSale">
+		<div class="houseSale" style="left: 43%; top: 50%; z-index: -1; display: none;" id="houseSale">
 			<span class="notice" id='notice'>Click and Drag</span>
 			<div id="homeGos">
 				<span class="HSheadline">***Дом продается***</span><br><br>

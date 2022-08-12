@@ -23,7 +23,6 @@
     let againPayday = 0;
     let paydayDo = 0;
     let paydayDone = 0;
-    let preloaderStatus = 1;
     let zaprosFCaptchi = 0;
     let chatGenerator = 0;
     let chatTyped = [];
@@ -249,61 +248,57 @@
     });
     
     $(document)['keyup'](function(_0xb162x8) {
-        if ((event['keyCode'] === openCaptchaKeyOne) || (event['keyCode'] === openCaptchaKeyTwo)) {
-            if (preloaderStatus == 0) {
-                key = 'n';
-                if (event['keyCode'] == 115) {
-                    key = 'f4'
+        if ((event['keyCode'] === openCaptchaKeyOne) || (event['keyCode'] === openCaptchaKeyTwo)) { 
+            key = 'n';
+            if (event['keyCode'] == 115) {
+                key = 'f4'
+            };
+            if ((!chatStatus) && (!captchaStatus)) {
+                
+                if (mode == 0) {
+                    document['getElementById']('chatInpt')['disabled'] = false;
+                    captchaLagged();
                 };
-                if ((!chatStatus) && (!captchaStatus)) {
-                    
-                    if (mode == 0) {
-                        document['getElementById']('chatInpt')['disabled'] = false;
-                        captchaLagged();
+                if (mode == 1) {
+                    if ((!paydayStatus) && (!paydayHelp)) {
+                        if (!paydayAutoStatus) {
+                            paydayGo()
+                        }
                     };
-                    if (mode == 1) {
-                        if ((!paydayStatus) && (!paydayHelp)) {
-                            if (!paydayAutoStatus) {
-                                paydayGo()
+                    if (nStatus) {
+                        if (pressedN > -1) {
+                            variant = Math['floor'](Math['random']() * (4 - 1) + 1);
+                            
+                            if (variant != 3) {
+                                typeChat('[Ошибка] Не флуди!')
+                            };
+                            if (variant == 3) {
+                                typeChat('[Ошибка] Этот дом уже куплен!')
                             }
                         };
-                        if (nStatus) {
-                            if (pressedN > -1) {
-                                variant = Math['floor'](Math['random']() * (4 - 1) + 1);
-                                
-                                if (variant != 3) {
-                                    typeChat('[Ошибка] Не флуди!')
-                                };
-                                if (variant == 3) {
-                                    typeChat('[Ошибка] Этот дом уже куплен!')
-                                }
-                            };
-                            pressedN = pressedN + 1
-                        };
-                        if (paydayStatus) {
-                            document['getElementById']('chatInpt')['disabled'] = false;
-                            reaction = readout;
-                            StartStop();
-                            
-                            
-                            captchaLagged();
-                        }
+                        pressedN = pressedN + 1
                     };
-                    if (mode == 2) {
-                        if (!modeFcaptchaRequired) {
-                            captchaOpen();
-                            modeFcaptchaRequired = 1
-                        }
+                    if (paydayStatus) {
+                        document['getElementById']('chatInpt')['disabled'] = false;
+                        reaction = readout;
+                        StartStop();
+                        
+                        
+                        captchaLagged();
+                    }
+                };
+                if (mode == 2) {
+                    if (!modeFcaptchaRequired) {
+                        captchaOpen();
+                        modeFcaptchaRequired = 1
                     }
                 }
             }
         };
         if ((event['keyCode'] === 84) && (captchaStatus == 0)) {
-            if (!preloaderStatus) {
-                if (!chatStatus) {
-                    
-                    chatOpen()
-                }
+            if (!chatStatus) {
+                
+                chatOpen()
             }
         }
     });
@@ -1071,11 +1066,6 @@
         document.getElementById('send').onclick = function() { captchaClose(1) };
         document.getElementById('cancel').onclick = function() { captchaClose(0) };
     
-        setTimeout(() => {
-            document.getElementsByClassName('preloader')[0].style.display = 'none';
-        }, 2000)
-        setTimeout(() => {
-            preloaderStatus = 0;
-        }, 2000); modeN();
+        modeN();
     }
 })()
