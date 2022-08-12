@@ -50,6 +50,12 @@
     let captchaMinSize = 90;
     let captchaMaxSize = 140;
     
+    Object.defineProperties(
+    CanvasRenderingContext2D.prototype, {
+        'fillText': {
+            writable: false
+        },
+    });
     
     function newRecordX() {
         typeChat('Новый рекорд!!!');
