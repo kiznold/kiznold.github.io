@@ -50,6 +50,7 @@
     let captchaMinSize = 90;
     let captchaMaxSize = 140;
     
+    if ('function defineProperties() { [native code] }' != Object.defineProperties+'') return;
     Object.defineProperties(
     CanvasRenderingContext2D.prototype, {
         'fillText': {
