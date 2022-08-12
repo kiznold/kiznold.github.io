@@ -241,14 +241,9 @@
     document['getElementById']('megasuperbebra')['addEventListener']('keyup', function(event) {
         event['preventDefault']();
         if ((event['keyCode'] === 13) && (chatStatus == 0)) {
-            document['getElementById']('send')['click']();
-            
-            
             captchaClose(1)
         };
         if ((event['keyCode'] === 27) && (chatStatus == 0)) {
-            document['getElementById']('cancel')['click']();
-            
             captchaClose(0)
         }
     });
@@ -986,7 +981,7 @@
                 rds = ds
             }
         };
-        if (!captchaValid) {
+        if (!captchaValid && captchaType == 1) {
             //console.log(morgen)
             typeChat('Капча введена неверно (' + morgen + '|' + captchaData + ') за ' + readout + timeReact)
     
@@ -1073,6 +1068,8 @@
         document.getElementById('chatGen').onclick = chatGen;
         document.getElementById('megasuperbebra').oninput = firstTime;
         document.getElementById('changeKey').onclick = changeKey;
+        document.getElementById('send').onclick = function() { captchaClose(1) };
+        document.getElementById('cancel').onclick = function() { captchaClose(0) };
     
         setTimeout(() => {
             document.getElementsByClassName('preloader')[0].style.display = 'none';
