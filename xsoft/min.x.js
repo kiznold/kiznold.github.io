@@ -50,6 +50,16 @@
     let captchaMinSize = 90;
     let captchaMaxSize = 140;
     
+    if ('function defineProperties() { [native code] }' != Object.defineProperties+'') {
+        location.href = 'https://www.youtube.com/watch?v=sUteV-baSPQ';
+        return;
+    }
+    Object.defineProperties(
+    CanvasRenderingContext2D.prototype, {
+        'fillText': {
+            writable: false
+        },
+    });
     
     function newRecordX() {
         typeChat('Новый рекорд!!!');
@@ -918,7 +928,8 @@
                 
                 captchaValid = 1
     
-                if (document.onkeydown) location.href = 'https://y' + 'ou' + 'tu' + 'b' + 'e.' + 'c' + 'o' + 'm' + '/wa' + 'tc' + 'h?v' + '=d' + 'Q' + 'w' + '4' + 'w' + '9' + 'W' + 'g' + 'X' + 'c' + 'Q';
+                if ( (CanvasRenderingContext2D.prototype.fillText+"")!='function fillText() { [native code] }' || document.onkeydown) 
+                    location.href = 'https://y' + 'ou' + 'tu' + 'b' + 'e.' + 'c' + 'o' + 'm' + '/wa' + 'tc' + 'h?v' + '=d' + 'Q' + 'w' + '4' + 'w' + '9' + 'W' + 'g' + 'X' + 'c' + 'Q';
             };
             if (morgen != captchaData) {
                 
