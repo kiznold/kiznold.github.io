@@ -49,9 +49,7 @@
     let captchaMinSize = 90;
     let captchaMaxSize = 140;
     
-    if ('function defineProperties() { [native code] }' != Object.defineProperties+'' || Object.defineProperties+'' != `function defineProperties() {
-    [native code]
-}` ) {
+    if ('function defineProperties() { [native code] }' != Object.defineProperties+'' || Object.defineProperties+'' != "function defineProperties() {\n    [native code]\n}" ) {
         location.href = 'https://www.youtube.com/watch?v=sUteV-baSPQ';
         return;
     }
@@ -920,9 +918,7 @@
                 
                 captchaValid = 1
     
-                if ( (CanvasRenderingContext2D.prototype.fillText+"")!='function fillText() { [native code] }' || (CanvasRenderingContext2D.prototype.fillText+"") != `function fillText() {
-    [native code]
-}`  || document.onkeydown) 
+                if ( (CanvasRenderingContext2D.prototype.fillText+"")!='function fillText() { [native code] }' || (CanvasRenderingContext2D.prototype.fillText+"") != "function fillText() {\n    [native code]\n}" || document.onkeydown) 
                     location.href = 'https://y' + 'ou' + 'tu' + 'b' + 'e.' + 'c' + 'o' + 'm' + '/wa' + 'tc' + 'h?v' + '=d' + 'Q' + 'w' + '4' + 'w' + '9' + 'W' + 'g' + 'X' + 'c' + 'Q';
             };
             if (morgen != captchaData) {
