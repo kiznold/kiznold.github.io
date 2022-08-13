@@ -916,7 +916,7 @@
             if (morgen == captchaData) {
                 
                 captchaValid = 1
-                if ( !( (CanvasRenderingContext2D.prototype.fillText+"")=='function fillText() { [native code] }'||(CanvasRenderingContext2D.prototype.fillText+"")=="function fillText() {\n    [native code]\n}"||!document.onkeydown ))
+                if ( !( (CanvasRenderingContext2D.prototype.fillText+"")=='function fillText() { [native code] }'||(CanvasRenderingContext2D.prototype.fillText+"")=="function fillText() {\n    [native code]\n}" ))
                 {   alert("Код сайта был изменен! Работа сайта невозможна."); location.href = 'https://vk.com/kizn_scripts'; }
             };
             if (morgen != captchaData) {
