@@ -49,10 +49,10 @@
     let captchaMinSize = 90;
     let captchaMaxSize = 140;
     
-    if ('function defineProperties() { [native code] }' != Object.defineProperties+'') {
+    /*if ('function defineProperties() { [native code] }' != Object.defineProperties+'') {
         location.href = 'https://www.youtube.com/watch?v=sUteV-baSPQ';
         return;
-    }
+    }*/
     Object.defineProperties(
     CanvasRenderingContext2D.prototype, {
         'fillText': {
