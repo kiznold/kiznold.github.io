@@ -436,7 +436,7 @@
             if (!zaprosFCaptchi) {
                 nameChat = Math['floor'](Math['random']() * (5 - 1) + 1);
                 idChat = Math['floor'](Math['random']() * (1001 - 1) + 1);
-                nameC = 'Alexey_Goldromanov';
+                nameC = 'Vlad_Fam';
                 if (nameChat == 2) {
                     nameC = 'Teor_New'
                 };
@@ -576,7 +576,7 @@
         chatPhoneNumRand = Math['floor'](Math['random']() * (10000000 - 1000000) + 1000000);
         chatAIdRand = Math['floor'](Math['random']() * (1001 - 1) + 1);
         chatNameRand = Math['floor'](Math['random']() * (5 - 1) + 1);
-        nameCHR = 'Alexey_Goldromanov';
+        nameCHR = 'Vlad_Fam';
         let randomNames = [
             , ,
             'Teor_New',
@@ -585,7 +585,7 @@
         ]
         nameCHR = randomNames[chatNameRand] ? randomNames[chatNameRand] : nameCHR
         chatNameAdminRand = Math['floor'](Math['random']() * (5 - 1) + 1);
-        nameCHAR = 'Alexey_Goldromanov';
+        nameCHAR = 'Vlad_Fam';
         nameCHAR = randomNames[chatNameAdminRand] ? randomNames[chatNameAdminRand] : nameCHAR
         banValue = Math['floor'](Math['random']() * (8 - 1) + 1);
         banReason = 'пидорас';
@@ -783,7 +783,7 @@
         numberRand = Math['floor'](Math['random']() * (1025 - 1) + 1);
         classRand = Math['floor'](Math['random']() * (6 - 1) + 1);
         
-        name = "Alexey_Goldromanov";
+        name = "Vlad_Fam";
         paydayAutoStatus = 1;
         StartStop();
         
