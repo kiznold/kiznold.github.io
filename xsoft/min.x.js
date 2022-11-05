@@ -48,22 +48,15 @@
     let zeroCaptchaHelp = 0;
     let captchaMinSize = 90;
     let captchaMaxSize = 140;
-    
-    if ('function defineProperties() { [native code] }' == Object.defineProperties+'' || Object.defineProperties+'' == "function defineProperties() {\n    [native code]\n}" ) {
-        Object.defineProperties(
-            CanvasRenderingContext2D.prototype, {
-                'fillText': {
-                    writable: false
-                },
-            }
-        );
-    } else return alert("Код сайта был изменен! Работа сайта невозможна.");
+    let captchaTimer = -1;
+    let firstSymbolTimer = -1;
+    let captchaRecord = -1;
+    let reactionTimer = -1;
     
     function newRecordX() {
-        typeChat('Новый рекорд!!!');
-        document.getElementById('headlineControl').innerText = 'Control [' + readout + 's]';
+        document.getElementById('headlineControl').innerText = 'Control [' + captchaRecord + 's]';
         document['getElementById']('record')['style']['display'] = 'block';
-        document['getElementById']('recordS')['innerHTML'] = readout + 's';
+        document['getElementById']('recordS')['innerHTML'] = captchaRecord + 's';
         setTimeout(() => {
             document.getElementById('record').style.display = 'none';
         }, 1500)
@@ -264,26 +257,28 @@
                             paydayGo()
                         }
                     };
-                    if (nStatus) {
-                        if (pressedN > -1) {
-                            variant = Math['floor'](Math['random']() * (4 - 1) + 1);
-                            
-                            if (variant != 3) {
-                                typeChat('[Ошибка] Не флуди!')
-                            };
-                            if (variant == 3) {
-                                typeChat('[Ошибка] Этот дом уже куплен!')
-                            }
-                        };
-                        pressedN = pressedN + 1
-                    };
                     if (paydayStatus) {
                         document['getElementById']('chatInpt')['disabled'] = false;
-                        reaction = readout;
-                        StartStop();
+                        // reaction = readout;
+                        // StartStop();
                         
                         
                         captchaLagged();
+                    } else {
+                        if (nStatus) {
+                            if (pressedN > -1) {
+                                variant = Math['floor'](Math['random']() * (4 - 1) + 1);
+                                
+                                if (variant != 3) {
+                                    typeChat('[Ошибка] Не флуди!')
+                                };
+    
+                                if (variant == 3) {
+                                    typeChat('[Ошибка] Этот дом уже куплен!')
+                                }
+                            };
+                            pressedN = pressedN + 1
+                        };
                     }
                 };
                 if (mode == 2) {
@@ -355,7 +350,7 @@
                 typeChat('/buybiz - купить бизнес(открыть капчу командой)');
                 typeChat('/key - сбросить клавиши открытия капчи');
                 typeChat('/about - о создателе');
-                typeChat('/contact - контакты');
+                //typeChat('/contact - контакты');
                 typeChat('/record - рекорды');
                 typeChat('/clear - очистить чат');
                 typeChat('/zero  - последняя цифра капчи 0');
@@ -376,7 +371,7 @@
             };
             if (chatValue == '/about') {
                 
-                typeChat('Сайт сделан JOsip(Teor_New) для тренировки капчи, играю на Brainburg');
+                typeChat('Сайт сделан Josip (Teor_New) для тренировки капчи, модифицирован и поддерживается k1zn\'ом.');
                 commandValid = 1
             };
             if (chatValue == '/record') {
@@ -397,12 +392,12 @@
                 };
                 commandValid = 1
             };
-            if (chatValue == '/contact') {
+            // if (chatValue == '/contact') {
                 
-                typeChat('Группа ВК - vk.com/xgangsoft');
-                typeChat('Страница ВК - vk.com/alexander_1919');
-                commandValid = 1
-            };
+            //     typeChat('Группа ВК - vk.com/xgangsoft');
+            //     typeChat('Страница ВК - vk.com/alexander_1919');
+            //     commandValid = 1
+            // };
             if (chatValue == '/key') {
                 
                 typeChat('Клавиши открытия капчи были сброшены, открыть капчу можно нажатием F4 или N');
@@ -423,7 +418,8 @@
                         typeChat('Сначала активируйте режим нажатием N')
                     }
                 } else {
-                    typeChat('Данная команда доступна исключительно в режиме N');
+                    if (mode != 0)
+                        typeChat('Данная команда доступна исключительно в режиме N');
                     
                 };
                 commandValid = 1
@@ -476,99 +472,99 @@
         lastValue = 0;
         chatSteps = null
     }
-    var base = 60;
-    var clocktimer, dateObj, dh, dm, ds, ms;
-    var readout = '';
-    var h = 1,
-        m = 1,
-        tm = 1,
-        s = 0,
-        ts = 0,
-        ms = 0,
-        init = 0;
+    // var base = 60;
+    // var clocktimer, dateObj, dh, dm, ds, ms;
+    // var readout = '';
+    // var h = 1,
+    //     m = 1,
+    //     tm = 1,
+    //     s = 0,
+    //     ts = 0,
+    //     ms = 0,
+    //     init = 0;
     
-    function ClearСlock() {
-        clearTimeout(clocktimer);
-        h = 1;
-        m = 1;
-        tm = 1;
-        s = 0;
-        ts = 0;
-        ms = 0;
-        init = 0;
-        readout = '00:00:00'
-    }
+    // function ClearСlock() {
+    //     clearTimeout(clocktimer);
+    //     h = 1;
+    //     m = 1;
+    //     tm = 1;
+    //     s = 0;
+    //     ts = 0;
+    //     ms = 0;
+    //     init = 0;
+    //     readout = '00:00:00'
+    // }
     
-    function StartTIME() {
-        var _0xb162x26 = new Date();
-        var _0xb162x27 = (_0xb162x26['getTime']() - dateObj['getTime']()) - (s * 1000);
-        if (_0xb162x27 > 999) {
-            s++
-        };
-        if (s >= (m * base)) {
-            ts = 0;
-            m++
-        } else {
-            ts = parseInt((ms / 100) + s);
-            if (ts >= base) {
-                ts = ts - ((m - 1) * base)
-            }
-        };
-        if (m > (h * base)) {
-            tm = 1;
-            h++
-        } else {
-            tm = parseInt((ms / 100) + m);
-            if (tm >= base) {
-                tm = tm - ((h - 1) * base)
-            }
-        };
-        ms = Math['round'](_0xb162x27 / 10);
-        if (ms > 99) {
-            ms = 0
-        };
-        if (ms == 0) {
-            ms = '00'
-        };
-        if (ms > 0 && ms <= 9) {
-            ms = '0' + ms
-        };
-        if (ts > 0) {
-            ds = ts
-        } else {
-            ds = '00'
-        };
-        dm = tm - 1;
-        if (dm > 0) {
-            if (dm < 10) {
-                dm = '0' + dm
-            }
-        } else {
-            dm = '00'
-        };
-        dh = h - 1;
-        if (dh > 0) {
-            if (dh < 10) {
-                dh = '0' + dh
-            }
-        } else {
-            dh = '00'
-        };
-        readout = ds + ':' + ms;
-        clocktimer = setTimeout(StartTIME, 1)
-    }
+    // function StartTIME() {
+    //     var _0xb162x26 = new Date();
+    //     var _0xb162x27 = (_0xb162x26['getTime']() - dateObj['getTime']()) - (s * 1000);
+    //     if (_0xb162x27 > 999) {
+    //         s++
+    //     };
+    //     if (s >= (m * base)) {
+    //         ts = 0;
+    //         m++
+    //     } else {
+    //         ts = parseInt((ms / 100) + s);
+    //         if (ts >= base) {
+    //             ts = ts - ((m - 1) * base)
+    //         }
+    //     };
+    //     if (m > (h * base)) {
+    //         tm = 1;
+    //         h++
+    //     } else {
+    //         tm = parseInt((ms / 100) + m);
+    //         if (tm >= base) {
+    //             tm = tm - ((h - 1) * base)
+    //         }
+    //     };
+    //     ms = Math['round'](_0xb162x27 / 10);
+    //     if (ms > 99) {
+    //         ms = 0
+    //     };
+    //     if (ms == 0) {
+    //         ms = '00'
+    //     };
+    //     if (ms > 0 && ms <= 9) {
+    //         ms = '0' + ms
+    //     };
+    //     if (ts > 0) {
+    //         ds = ts
+    //     } else {
+    //         ds = '00'
+    //     };
+    //     dm = tm - 1;
+    //     if (dm > 0) {
+    //         if (dm < 10) {
+    //             dm = '0' + dm
+    //         }
+    //     } else {
+    //         dm = '00'
+    //     };
+    //     dh = h - 1;
+    //     if (dh > 0) {
+    //         if (dh < 10) {
+    //             dh = '0' + dh
+    //         }
+    //     } else {
+    //         dh = '00'
+    //     };
+    //     readout = ds + ':' + ms;
+    //     clocktimer = setTimeout(StartTIME, 1)
+    // }
     
-    function StartStop() {
-        if (!init) {
-            ClearСlock();
-            dateObj = new Date();
-            StartTIME();
-            init = 1
-        } else {
-            clearTimeout(clocktimer);
-            init = 0
-        }
-    }
+    // function StartStop() {
+    //     if (!init) {
+    //         ClearСlock();
+    //         dateObj = new Date();
+    //         StartTIME();
+    //         init = 1
+    //     } else {
+    //         clearTimeout(clocktimer);
+    //         init = 0
+    //     }
+    // }
     
     function chatStr() {
         chatStrValue = Math['floor'](Math['random']() * (6 - 1) + 1);
@@ -785,7 +781,8 @@
         
         name = "Vlad_Fam";
         paydayAutoStatus = 1;
-        StartStop();
+        reactionTimer = Date.now();
+        // StartStop();
         
         
         paydayStatus = 1;
@@ -835,14 +832,13 @@
     }
     
     function firstTime() {
-        getInput = document['getElementById']('megasuperbebra')['value'];
-        inputLenght = getInput['length'];
+        let getInput = document['getElementById']('megasuperbebra')['value'];
+        inputLength = getInput['length'];
         if (!firstSymbolStatus) {
-            if (inputLenght == 1) {
+            if (inputLength == 1) {
                 if ((getInput > -1) && (getInput < 10)) {
                     firstSymbolStatus = 1;
-                    firstSymbol = readout;
-                    
+                    firstSymbol = parseFloat(((Date.now() - firstSymbolTimer) / 1000).toFixed(3))
                 }
             }
         }
@@ -862,22 +858,30 @@
                 modeFcaptchaRequired = 0;
                 typeChat('Цикл остановлен');
                 captchaClose(0);
-                
             }
         }
+        document['getElementById']('modeP')['classList']['remove']('btnSelected');
+        document['getElementById']('modeF')['classList']['remove']('btnSelected'); // lmao
+        mode = 0;
+        modeChange = 0;
     }
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+        return Math.floor(Math.random() * (max - min)) + min;
     }
     
     function captchaOpen() {
         captchaLagWaiting = 0;
         modeChange = 1;
         captchaStatus = 1;
-        StartStop();
+        captchaTimer = firstSymbolTimer = Date.now();
+        if (paydayStatus && reactionTimer != -1) {
+            reaction = parseFloat(((Date.now() - reactionTimer) / 1000).toFixed(3))
+        }
+        firstSymbolStatus = 0;
+        // StartStop();
         if (fakeStatus == 1) {
             morgen = fCaptcha
         };
@@ -901,28 +905,18 @@
         
     }
     
-    function captchaClose(_0xb162x3a) {
+    function captchaClose(cType) {
         
         firstSymbolStatus = 0;
         modeChange = 0;
-        captchaType = _0xb162x3a;
-        StartStop();
         captchaStatus = 0;
         captchaValid = 0;
         timeReact = '';
         let cValue = document['getElementById']('megasuperbebra')['value'];
-        captchaData = (isNaN(cValue * 1) || cValue === '') ? 'Ничего' : cValue * 1;
-        if (captchaType == 1) {
-            if (morgen == captchaData) {
-                
-                captchaValid = 1
-                if ( !( (CanvasRenderingContext2D.prototype.fillText+"")=='function fillText() { [native code] }'||(CanvasRenderingContext2D.prototype.fillText+"")=="function fillText() {\n    [native code]\n}" ))
-                {   alert("Код сайта был изменен! Работа сайта невозможна."); location.href = 'https://vk.com/kizn_scripts'; }
-            };
-            if (morgen != captchaData) {
-                
-                captchaValid = 0
-            }
+        let captchaTime = parseFloat(((Date.now() - captchaTimer) / 1000).toFixed(3))
+        captchaData = cValue
+        if (cType == 1) {
+            captchaValid = (morgen+"" == captchaData)
         };
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'none';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'none';
@@ -935,55 +929,31 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (mode == 1) {
-            timeReact = '. Капча открыта за ' + reaction + '.';
+            timeReact = ", открыта за " + reaction + "s";
             paydayOff();
             if (!stopStatus) {
                 if (!paydayDo) {
-                    
                     paydayGo()
                 }
             }
         };
-        if (captchaValid) {
-            /*let reklama = Math.floor(Math.random() * (10 - 1) + 1);
-            if (reklama == 3) {
-                document['getElementById']('chatArea')['value'] = document['getElementById']('chatArea')['value'] + "Вы можете заказать любой скрипт по вашему усмотрению для RakBot или GTA:SA. Подробнее в конце сайта (СКРИПТЫ НА ЗАКАЗ)\n";
-            };*/
-            typeChat('Капча введена (' + morgen + '|' + captchaData + ') за ' + readout + timeReact + ' Первый символ был введен за ' + firstSymbol);
-            if (record) {
-                if (ds < rds) {
-                    
-                    recordArr['push'](readout);
-                    rms = ms;
-                    rds = ds;
+        if (cType == 1) {
+            let isRecord = false
+            if (captchaValid) {
+                if (captchaTime < captchaRecord || captchaRecord == -1) {
+                    isRecord = true
+                    captchaRecord = captchaTime
                     newRecordX()
-                };
-                if (ds == rds) {
-                    if (ms < rms) {
-                        
-                        recordArr['push'](readout);
-                        rms = ms;
-                        rds = ds;
-                        newRecordX()
-                    }
+                    recordArr.push(captchaRecord)
                 }
             };
-            if (!record) {
-                record = 1;
-                rms = ms;
-                rds = ds
-            }
-        };
-        if (!captchaValid && captchaType == 1) {
-            //console.log(morgen)
-            typeChat('Капча введена неверно (' + morgen + '|' + captchaData + ') за ' + readout + timeReact)
-    
-        };
-        
-        timeReact = '';
+            typeChat((isRecord ? "[РЕКОРД] " : "") + "Капча введена " + (captchaValid ? "" : "не") + "верно (" + morgen + '|' + captchaData + ') за ' + captchaTime + "s (первый символ: " + (firstSymbol != 0 ? firstSymbol + "s" : "нет") + (mode == 1 ? timeReact : "") + ")");
+        }
+
+        firstSymbol = 0
+        timeReact = "";
         if (mode == 2) {
             if (modeFcaptchaRequired) {
-                
                 captchaOpen()
             }
         }
