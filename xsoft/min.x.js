@@ -374,9 +374,9 @@
                 commandValid = 1
             };
             if (chatValue == '/record') {
-                
+                recordArr = recordArr.sort((a, b) => a - b);
                 if (recordArr.length > 0) {
-                    for (let i = 0; i <= recordArr; i++) {
+                    for (let i = 0; i < recordArr.length; i++) {
                         typeChat((i + 1) + ") " + recordArr[i] + "s")
                     }
                 } else {
