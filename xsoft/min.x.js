@@ -39,7 +39,6 @@
     let modeFcaptchaRequired = 0;
     let rds = 0;
     let rms = 0;
-    let record = 0;
     let recordArr = [];
     let captchaLagStatus = 0;
     let captchaLagHelp = 0;
@@ -376,20 +375,13 @@
             };
             if (chatValue == '/record') {
                 
-                if (record) {
-                    typeChat('Рекорды:');
-                    if (recordArr['length'] < 3) {
-                        typeChat(recordArr[recordArr['length'] - 1])
-                    };
-                    if (recordArr['length'] >= 3) {
-                        typeChat('1) ' + recordArr[recordArr['length'] - 1]);
-                        typeChat('2) ' + recordArr[recordArr['length'] - 2]);
-                        typeChat('3) ' + recordArr[recordArr['length'] - 3])
+                if (recordArr.length > 0) {
+                    for (let i = 0; i <= recordArr; i++) {
+                        typeChat((i + 1) + ") " + recordArr[i] + "s")
                     }
-                };
-                if (!record) {
-                    typeChat('Рекордов еще нету!')
-                };
+                } else {
+                    typeChat("Рекордов ещё нету!")
+                }
                 commandValid = 1
             };
             // if (chatValue == '/contact') {
