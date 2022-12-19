@@ -1,9 +1,3 @@
-
-@font-face {
-	font-family: gta;
-	src: url("6353.ttf") format("opentype");
-}
-
 #control {
 	display: block;
     width: 14.375pc;

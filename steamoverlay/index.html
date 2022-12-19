@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam Overlay</title>
+  <style>
+    a {
+      text-decoration: none;
+    }
+    body {
+      background: #2A2E33;
+    }
+    #centered {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 100px;
+      margin: -50px 0 0 -150px;
+    }
+  </style>
+</head>
+<body>
+  <div id="centered">
+    <a href="https://cybershoke.net/">
+      <img src="https://i.imgur.com/rbSNYDO.png" width="75px" height="75px"/>
+    </a>
+    <a href="https://www.faceit.com/">
+      <img src="https://i.imgur.com/zKoEYE9.png" width="75px" height="75px"/>
+    </a>
+    <a href="https://steamcommunity.com/">
+      <img src="https://i.imgur.com/oI8X0NJ.png" width="75px" height="75px"/>
+    </a>
+    <a href="https://vk.com/feed">
+      <img src="https://i.imgur.com/AufJkoc.png" width="75px" height="75px"/>
+    </a>
+  </div>
+  <script>
+    let color = new URLSearchParams(location.search)?.get("color") || "2A2E33";
+    document.body.style.background = `#${color}`;
+  </script>
+</body>
+</html>
