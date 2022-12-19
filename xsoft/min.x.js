@@ -748,8 +748,6 @@ function time() {
     }, 5000)
 }
 
-morgen.__proto__.toString = () => { location.href = 'https://www.youtube.com/watch?v=sUteV-baSPQ'; }
-
 function fakeCaptcha(_0xb162x30) {
     captchaFake = _0xb162x30;
     if (captchaFake != 0) {
@@ -1049,3 +1047,20 @@ window.onload = () => {
         preloaderStatus = 0;
     }, 2000); modeN();
 }
+
+
+(function () {
+    const document__onkeydown = document.onkeydown
+    const window__onkeydown = document.onkeydown
+    const omfg = setInterval(() => {
+        const watch = [
+            document.onkeydown !== document__onkeydown,
+            window.onkeydown !== window__onkeydown,
+        ]
+        const isBypassed = !watch.every(e => e !== true)
+        if(isBypassed) {
+            // location.href = 'https://www.youtube.com/watch?v=sUteV-baSPQ';
+            clearInterval(omfg)
+        }    
+    }, 500);
+})()
