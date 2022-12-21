@@ -1026,8 +1026,8 @@
         document.getElementById('cancel').onclick = function() { captchaClose(0) };
     
         modeN();
-        const xxxxreklama233232323 = () => typeChat("[AD] Хочешь заказать скрипт, но не знаешь у кого? Просто воспользуйся нашим ботом https://www.blast.hk/threads/161825/");
-        xxxxreklama233232323();
-        setInterval(xxxxreklama233232323, 60e3);
+        /*const xxxxreklama233232323 = () =>*/ typeChat("[AD] Хочешь заказать скрипт, но не знаешь у кого? Просто воспользуйся нашим ботом https://www.blast.hk/threads/161825/");
+        /*xxxxreklama233232323();
+        setInterval(xxxxreklama233232323, 60e3);*/
     }
 })()
