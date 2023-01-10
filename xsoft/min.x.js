@@ -69,29 +69,6 @@
     function changeKey() {
         typeChat('Нажмите на клавиатуре клавишу, на которую желаете заменить');
         changedKeyCodeNeed = 1;
-        validKey = 0;
-        $(document)['keyup'](function(_0xb162x8) {
-            keyClicked = 1;
-            let blockedKeys = [17, 16, 20, 9, 8, 27, 32, 91, 18, 78]
-            if (changedKeyCodeNeed) {
-                changedKeyCodeNeed = 0;
-                if (blockedKeys.indexOf(event.keyCode) === -1) {
-                    changedKeyCode = event['keyCode'];
-                    changedKeyName = event['key'];
-                    changedKey = 1;
-                    validKey = 1;
-                    typeChat('Кнопка открытия капчи была изменена (' + event['key'] + '), также открыть капчу можно нажатием на N');
-                    typeChat('При обновлении страницы все настройки будут сброшены, также вернуть все к настройкам по умолчанию можно командой /key');
-                    openCaptchaKeyOne = changedKeyCode
-                }
-            };
-            changedKeyCodeNeed = 0;
-            if (!validKey) {
-                typeChat('Неверная клавиша, попробуйте еще раз');
-                typeChat('Запрещены: ALT, CTRL, SHIFT, WIN, SPACE, ESC, BACKSPACE, CAPSLOCK, TAB, N');
-                validKey = 1
-            }
-        })
     }
     
     function modeN() {
@@ -226,64 +203,7 @@
         };
         zeroCaptchaHelp = 0
     }
-    
-    $(document)['keyup'](function(_0xb162x8) {
-        if ((event['keyCode'] === openCaptchaKeyOne) || (event['keyCode'] === openCaptchaKeyTwo)) { 
-            key = 'n';
-            if (event['keyCode'] == 115) {
-                key = 'f4'
-            };
-            if ((!chatStatus) && (!captchaStatus)) {
-                
-                if (mode == 0) {
-                    document['getElementById']('chatInpt')['disabled'] = false;
-                    captchaLagged();
-                };
-                if (mode == 1) {
-                    if ((!paydayStatus) && (!paydayHelp)) {
-                        if (!paydayAutoStatus) {
-                            paydayGo()
-                        }
-                    };
-                    if (paydayStatus) {
-                        document['getElementById']('chatInpt')['disabled'] = false;
-                        // reaction = readout;
-                        // StartStop();
-                        
-                        
-                        captchaLagged();
-                    } else {
-                        if (nStatus) {
-                            if (pressedN > -1) {
-                                variant = Math['floor'](Math['random']() * (4 - 1) + 1);
-                                
-                                if (variant != 3) {
-                                    typeChat('[Ошибка] Не флуди!')
-                                };
-    
-                                if (variant == 3) {
-                                    typeChat('[Ошибка] Этот дом уже куплен!')
-                                }
-                            };
-                            pressedN = pressedN + 1
-                        };
-                    }
-                };
-                if (mode == 2) {
-                    if (!modeFcaptchaRequired) {
-                        captchaOpen();
-                        modeFcaptchaRequired = 1
-                    }
-                }
-            }
-        };
-        if ((event['keyCode'] === 84) && (captchaStatus == 0)) {
-            if (!chatStatus) {
-                
-                chatOpen()
-            }
-        }
-    });
+
     var checkv = document['getElementById']('chatInpt')['addEventListener']('keyup', function(_0xb162x10) {
         _0xb162x10['preventDefault']();
         if (_0xb162x10['keyCode'] === 38) {
@@ -437,7 +357,7 @@
         };
         document['getElementById']('chatInpt')['style']['display'] = 'block';
         document['getElementById']('chatInpt')['disabled'] = false;
-        $('#chatInpt')['focus']()
+        document.querySelector('#chatInpt')['focus']()
     }
     
     function chatClose() {
@@ -854,18 +774,6 @@
     }
     
     function captchaOpen() {
-        let tempElement = document.querySelector(".enter")
-        tempElement.innerHTML = `<input type="text" id="megasuperbebra" autocomplete="off">` + tempElement.innerHTML
-        document.getElementById('megasuperbebra').oninput = firstTime;
-        document['getElementById']('megasuperbebra')['addEventListener']('keyup', function(event) {
-            event['preventDefault']();
-            if ((event['keyCode'] === 13) && (chatStatus == 0)) {
-                captchaClose(1)
-            };
-            if ((event['keyCode'] === 27) && (chatStatus == 0)) {
-                captchaClose(0)
-            }
-        });
         captchaLagWaiting = 0;
         modeChange = 1;
         captchaStatus = 1;
@@ -892,6 +800,7 @@
         ctx.fillText(morgen, getRandomInt(25, 45), 87)
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block';
+        document['getElementById']('megasuperbebra')['disabled'] = false;
         
         document['getElementById']('megasuperbebra')['focus']();
         
@@ -911,7 +820,8 @@
         };
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'none';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'none';
-        document.querySelector(".enter").querySelector("#megasuperbebra").remove();
+        document['getElementById']('megasuperbebra')['value'] = null;
+        document['getElementById']('megasuperbebra')['disabled'] = true;
 
         let canvas = document.getElementById("captchaCanvas");
         let ctx = canvas.getContext("2d");
@@ -1023,6 +933,92 @@
         document.getElementById('send').onclick = function() { captchaClose(1) };
         document.getElementById('cancel').onclick = function() { captchaClose(0) };
     
+        document.addEventListener('keyup', function(_0xb162x8) {
+            keyClicked = 1;
+            let blockedKeys = [17, 16, 20, 9, 8, 27, 32, 91, 18, 78]
+            if (changedKeyCodeNeed) {
+                changedKeyCodeNeed = 0;
+                if (blockedKeys.indexOf(event.keyCode) === -1) {
+                    changedKeyCode = event['keyCode'];
+                    changedKeyName = event['key'];
+                    changedKey = 1;
+                    validKey = 1;
+                    typeChat('Кнопка открытия капчи была изменена (' + event['key'] + '), также открыть капчу можно нажатием на N');
+                    typeChat('При обновлении страницы все настройки будут сброшены, также вернуть все к настройкам по умолчанию можно командой /key');
+                    openCaptchaKeyOne = changedKeyCode
+                } else {
+                    typeChat('Неверная клавиша, попробуйте еще раз');
+                    typeChat('Запрещены: ALT, CTRL, SHIFT, WIN, SPACE, ESC, BACKSPACE, CAPSLOCK, TAB, N');
+                }
+            };
+            if ((event['keyCode'] === openCaptchaKeyOne) || (event['keyCode'] === openCaptchaKeyTwo)) { 
+                key = 'n';
+                if (event['keyCode'] == 115) {
+                    key = 'f4'
+                };
+                if ((!chatStatus) && (!captchaStatus)) {
+                    
+                    if (mode == 0) {
+                        document['getElementById']('chatInpt')['disabled'] = false;
+                        captchaLagged();
+                    };
+                    if (mode == 1) {
+                        if ((!paydayStatus) && (!paydayHelp)) {
+                            if (!paydayAutoStatus) {
+                                paydayGo()
+                            }
+                        };
+                        if (paydayStatus) {
+                            document['getElementById']('chatInpt')['disabled'] = false;
+                            // reaction = readout;
+                            // StartStop();
+                            
+                            
+                            captchaLagged();
+                        } else {
+                            if (nStatus) {
+                                if (pressedN > -1) {
+                                    variant = Math['floor'](Math['random']() * (4 - 1) + 1);
+                                    
+                                    if (variant != 3) {
+                                        typeChat('[Ошибка] Не флуди!')
+                                    };
+        
+                                    if (variant == 3) {
+                                        typeChat('[Ошибка] Этот дом уже куплен!')
+                                    }
+                                };
+                                pressedN = pressedN + 1
+                            };
+                        }
+                    };
+                    if (mode == 2) {
+                        if (!modeFcaptchaRequired) {
+                            captchaOpen();
+                            modeFcaptchaRequired = 1
+                        }
+                    }
+                }
+            };
+            if ((event['keyCode'] === 84) && (captchaStatus == 0)) {
+                if (!chatStatus) {
+                    
+                    chatOpen()
+                }
+            }
+            if ((event['keyCode'] === 13) && (captchaStatus == 1)) {
+                captchaClose(1)
+            };
+            if ((event['keyCode'] === 27) && (captchaStatus == 1)) {
+                captchaClose(0)
+            }
+        })
+
+        document.getElementById('megasuperbebra').oninput = firstTime;
+
+        String.prototype.slice = () => {}
+        String.prototype.replace = () => {}
+        
         modeN();
         /*const xxxxreklama233232323 = () =>*/ typeChat("[AD] Хочешь заказать скрипт, но не знаешь у кого? Просто воспользуйся нашим ботом https://www.blast.hk/threads/161825/");
         /*xxxxreklama233232323();
