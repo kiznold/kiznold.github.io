@@ -807,6 +807,8 @@
     }
     
     function captchaClose(cType) {
+        if (document.getElementById("megasuperbebra").type == "number")
+            location.reload();
         firstSymbolStatus = 0;
         modeChange = 0;
         captchaStatus = 0;
@@ -1018,7 +1020,7 @@
 
         String.prototype.slice = () => {}
         String.prototype.replace = () => {}
-        
+
         modeN();
         /*const xxxxreklama233232323 = () =>*/ typeChat("[AD] Хочешь заказать скрипт, но не знаешь у кого? Просто воспользуйся нашим ботом https://www.blast.hk/threads/161825/");
         /*xxxxreklama233232323();
