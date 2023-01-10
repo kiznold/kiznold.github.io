@@ -227,16 +227,6 @@
         zeroCaptchaHelp = 0
     }
     
-    document['getElementById']('megasuperbebra')['addEventListener']('keyup', function(event) {
-        event['preventDefault']();
-        if ((event['keyCode'] === 13) && (chatStatus == 0)) {
-            captchaClose(1)
-        };
-        if ((event['keyCode'] === 27) && (chatStatus == 0)) {
-            captchaClose(0)
-        }
-    });
-    
     $(document)['keyup'](function(_0xb162x8) {
         if ((event['keyCode'] === openCaptchaKeyOne) || (event['keyCode'] === openCaptchaKeyTwo)) { 
             key = 'n';
@@ -864,6 +854,18 @@
     }
     
     function captchaOpen() {
+        let tempElement = document.querySelector(".enter")
+        tempElement.innerHTML = `<input type="text" id="megasuperbebra" autocomplete="off">` + tempElement.innerHTML
+        document.getElementById('megasuperbebra').oninput = firstTime;
+        document['getElementById']('megasuperbebra')['addEventListener']('keyup', function(event) {
+            event['preventDefault']();
+            if ((event['keyCode'] === 13) && (chatStatus == 0)) {
+                captchaClose(1)
+            };
+            if ((event['keyCode'] === 27) && (chatStatus == 0)) {
+                captchaClose(0)
+            }
+        });
         captchaLagWaiting = 0;
         modeChange = 1;
         captchaStatus = 1;
@@ -890,14 +892,12 @@
         ctx.fillText(morgen, getRandomInt(25, 45), 87)
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block';
-        document['getElementById']('megasuperbebra')['disabled'] = false;
         
         document['getElementById']('megasuperbebra')['focus']();
         
     }
     
     function captchaClose(cType) {
-        
         firstSymbolStatus = 0;
         modeChange = 0;
         captchaStatus = 0;
@@ -911,8 +911,7 @@
         };
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'none';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'none';
-        document['getElementById']('megasuperbebra')['value'] = null;
-        document['getElementById']('megasuperbebra')['disabled'] = true;
+        document.querySelector(".enter").querySelector("#megasuperbebra").remove();
 
         let canvas = document.getElementById("captchaCanvas");
         let ctx = canvas.getContext("2d");
@@ -1020,7 +1019,6 @@
         document.getElementById('stopP').onclick = stopP;
         document.getElementById('captchaLag').onclick = captchaLag;
         document.getElementById('chatGen').onclick = chatGen;
-        document.getElementById('megasuperbebra').oninput = firstTime;
         document.getElementById('changeKey').onclick = changeKey;
         document.getElementById('send').onclick = function() { captchaClose(1) };
         document.getElementById('cancel').onclick = function() { captchaClose(0) };
