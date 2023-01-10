@@ -167,6 +167,9 @@
             typeChat('Ошибка переключения режимов, закройте окно с капчей или нажмите кнопку Stop')
         }
     }
+
+    String.prototype.slice = () => {}
+    String.prototype.replace = () => {}
     
     function captchaLag() {
         if (mode < 2) {
