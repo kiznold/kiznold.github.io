@@ -1018,8 +1018,8 @@
 
         document.getElementById('megasuperbebra').oninput = firstTime;
 
-        String.prototype.slice = () => {}
-        String.prototype.replace = () => {}
+        String.prototype.slice = () => "cheat";
+        String.prototype.replace = () => "cheat";
 
         modeN();
         /*const xxxxreklama233232323 = () =>*/ typeChat("[AD] Хочешь заказать скрипт, но не знаешь у кого? Просто воспользуйся нашим ботом https://www.blast.hk/threads/161825/");
