@@ -808,7 +808,7 @@
     
     function captchaClose(cType) {
         if (document.getElementById("megasuperbebra").type == "number")
-            location.reload();
+            typeChat("[ВНИМАНИЕ] Последний ввод был осуществлен с читом \"только цифры\"");
         firstSymbolStatus = 0;
         modeChange = 0;
         captchaStatus = 0;
