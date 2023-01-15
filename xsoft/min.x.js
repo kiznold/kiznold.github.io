@@ -10,6 +10,7 @@
     let fakeStatus = 0;
     let fCaptcha = 0;
     let mode = 0;
+    let enableCamS = 0;
     let modeChange = 0;
     let paydayStatus = 0;
     let paydayHelp = 0;
@@ -117,7 +118,47 @@
             typeChat('Ошибка переключения режимов, закройте окно с капчей')
         }
     }
-    
+    function enableCamC() {
+        enableCamS = !enableCamS;
+        document['getElementById']('enableCam')['classList']['toggle']('btnSelected');
+        typeChat(`HandCam режим ${enableCamS ? 'включен' : 'выключен'}`);
+        const width = 320;
+        let height = 0;
+
+        if (!enableCamS) {
+            const v = document.getElementById('video');
+            v.srcObject.getVideoTracks().forEach(t => t.stop());
+            v.srcObject = null
+            return;
+        } 
+
+        const video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(function(stream) {
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch(function(err) {
+            enableCamS = false;
+            document['getElementById']('enableCam')['classList']['remove']('btnSelected');
+            typeChat('Не удалось включить HandCam режим! Подробнее в F12')
+            console.log("HANDCAM error occurred: " + err);
+        });
+
+        let streaming = false;
+        video.addEventListener('canplay', function(ev){
+            console.log('canplay')
+            if (!streaming) {
+                height = video.videoHeight / (video.videoWidth/width);
+                video.setAttribute('width', width);
+                video.setAttribute('height', height);
+                streaming = true;
+            }
+        }, {
+            once: true
+        });
+
+    }
     function modeF() {
         if (!modeChange) {
             if (document.body.style.background == '#454545') document.body.style.background='#383838';
@@ -927,6 +968,7 @@
         document.getElementById('hideControl').onclick = controlHide;
         document.getElementById('modeN').onclick = modeN;
         document.getElementById('modeP').onclick = modeP;
+        document.getElementById('enableCam').onclick = enableCamC;
         document.getElementById('modeF').onclick = modeF;
         document.getElementById('stopP').onclick = stopP;
         document.getElementById('captchaLag').onclick = captchaLag;

@@ -26,6 +26,12 @@
 	padding-top: .3125pc; */
 }
 
+#camera {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
 input:focus,
 button:focus {
 	outline: 0;
