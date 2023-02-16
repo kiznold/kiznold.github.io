@@ -56,11 +56,16 @@ body {
 	display: inline-block;
 }
 
-[id~=headlineControl] {
+[id~=headlineControl],
+[id~=goodCaptcha],
+[id~=average]
+{
 	font-size: 13px;
 }
 
-[id~=headlineControl] {
+[id~=headlineControl],
+[id~=goodCaptcha],
+[id~=average] {
 	color: white;
 }
 

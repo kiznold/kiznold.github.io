@@ -846,6 +846,11 @@
         document['getElementById']('megasuperbebra')['focus']();
         
     }
+
+    function goodParseInt(somethin) {
+        let parsed = parseInt(somethin)
+        return isNaN(parsed) ? 0 : parsed
+    }
     
     function captchaClose(cType) {
         if (document.getElementById("megasuperbebra").type == "number")
@@ -890,6 +895,14 @@
                     recordArr.push(captchaRecord)
                 }
             };
+            localStorage.setItem("allInputs", parseFloat(localStorage.getItem("allInputs") || .0) + captchaTime)
+            localStorage.setItem("counterInputs", parseInt(localStorage.getItem("counterInputs") || 0) + 1);
+            localStorage.setItem("allCaptcha", parseInt(localStorage.getItem("allCaptcha") || 0) + 1);
+            if (captchaValid)
+                localStorage.setItem("goodCaptcha", parseInt(localStorage.getItem("goodCaptcha") || 0) + 1);
+            
+                document.getElementById("average").innerText = `Средний ввод: ${(localStorage.getItem("allInputs") / localStorage.getItem("counterInputs")).toFixed(3)}s`
+            document.getElementById("goodCaptcha").innerText = `Процент верных капч: ${Math.trunc((localStorage.getItem("goodCaptcha") / localStorage.getItem("allCaptcha")) * 100)}%`
             typeChat((isRecord ? "[РЕКОРД] " : "") + "Капча введена " + (captchaValid ? "" : "не") + "верно (" + morgen + '|' + captchaData + ') за ' + captchaTime + "s (первый символ: " + (firstSymbol != 0 ? firstSymbol + "s" : "нет") + (mode == 1 ? timeReact : "") + ")");
         }
 
@@ -976,7 +989,10 @@
         document.getElementById('changeKey').onclick = changeKey;
         document.getElementById('send').onclick = function() { captchaClose(1) };
         document.getElementById('cancel').onclick = function() { captchaClose(0) };
-    
+
+        document.getElementById("goodCaptcha").innerText = `Процент верных капч: ${Math.trunc(((localStorage.getItem("goodCaptcha") || 0) / (localStorage.getItem("allCaptcha") || 1)) * 100)}%`
+        document.getElementById("average").innerText = `Средний ввод: ${((localStorage.getItem("allInputs") || 0) / (localStorage.getItem("counterInputs") || 1)).toFixed(3)}s`
+        
         document.addEventListener('keyup', function(_0xb162x8) {
             keyClicked = 1;
             let blockedKeys = [17, 16, 20, 9, 8, 27, 32, 91, 18, 78]
