@@ -374,7 +374,7 @@
             if (!zaprosFCaptchi) {
                 nameChat = Math['floor'](Math['random']() * (5 - 1) + 1);
                 idChat = Math['floor'](Math['random']() * (1001 - 1) + 1);
-                nameC = 'Vlad_Fam';
+                nameC = 'Developer_Patcher';
                 if (nameChat == 2) {
                     nameC = 'Teor_New'
                 };
@@ -514,7 +514,7 @@
         chatPhoneNumRand = Math['floor'](Math['random']() * (10000000 - 1000000) + 1000000);
         chatAIdRand = Math['floor'](Math['random']() * (1001 - 1) + 1);
         chatNameRand = Math['floor'](Math['random']() * (5 - 1) + 1);
-        nameCHR = 'Vlad_Fam';
+        nameCHR = 'Developer_Patcher';
         let randomNames = [
             , ,
             'Teor_New',
@@ -523,7 +523,7 @@
         ]
         nameCHR = randomNames[chatNameRand] ? randomNames[chatNameRand] : nameCHR
         chatNameAdminRand = Math['floor'](Math['random']() * (5 - 1) + 1);
-        nameCHAR = 'Vlad_Fam';
+        nameCHAR = 'Developer_Patcher';
         nameCHAR = randomNames[chatNameAdminRand] ? randomNames[chatNameAdminRand] : nameCHAR
         banValue = Math['floor'](Math['random']() * (8 - 1) + 1);
         banReason = 'пидорас';
@@ -721,7 +721,7 @@
         numberRand = Math['floor'](Math['random']() * (1025 - 1) + 1);
         classRand = Math['floor'](Math['random']() * (6 - 1) + 1);
         
-        name = "Vlad_Fam";
+        name = "Developer_Patcher";
         paydayAutoStatus = 1;
         reactionTimer = Date.now();
         // StartStop();
