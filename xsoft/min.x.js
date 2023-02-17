@@ -896,7 +896,7 @@
                 }
             };
             localStorage.setItem("xCounterInputs", parseInt(localStorage.getItem("xCounterInputs") || 0) + 1);
-            localStorage.setItem("xCounterFirstSymb", parseInt(localStorage.getItem("xAllFirstSymb") || 0) + 1);
+            localStorage.setItem("xCounterFirstSymb", parseInt(localStorage.getItem("xCounterFirstSymb") || 0) + 1);
             localStorage.setItem("xAllCaptcha", parseInt(localStorage.getItem("xAllCaptcha") || 0) + 1);
             if (captchaValid) {
                 localStorage.setItem("xGoodCaptcha", parseInt(localStorage.getItem("xGoodCaptcha") || 0) + 1);
