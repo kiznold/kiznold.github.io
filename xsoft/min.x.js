@@ -904,9 +904,9 @@
                 localStorage.setItem("xxAllFirstSymb", parseFloat(localStorage.getItem("xxAllFirstSymb") || .0) + firstSymbol)
             
                 document.getElementById("average").innerText = `Средний ввод: ${(localStorage.getItem("xxAllInputs") / localStorage.getItem("xxCounterInputs")).toFixed(3)}s`
-                document.getElementById("goodCaptcha").innerText = `Процент верных капч: ${Math.trunc((localStorage.getItem("xxGoodCaptcha") / localStorage.getItem("xxAllCaptcha")) * 100)}%`
                 document.getElementById("averageFirstSymb").innerText = `Средний ввод первого символа: ${(localStorage.getItem("xxAllFirstSymb") / localStorage.getItem("xxCounterFirstSymb")).toFixed(3)}s`
             };
+            document.getElementById("goodCaptcha").innerText = `Процент верных капч: ${Math.trunc((localStorage.getItem("xxGoodCaptcha") / localStorage.getItem("xxAllCaptcha")) * 100)}%`
             typeChat((isRecord ? "[РЕКОРД] " : "") + "Капча введена " + (captchaValid ? "" : "не") + "верно (" + morgen + '|' + captchaData + ') за ' + captchaTime + "s (первый символ: " + (firstSymbol != 0 ? firstSymbol + "s" : "нет") + (mode == 1 ? timeReact : "") + ")");
         }
 
