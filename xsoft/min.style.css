@@ -58,14 +58,15 @@ body {
 
 [id~=headlineControl],
 [id~=goodCaptcha],
-[id~=average]
-{
+[id~=average],
+[id~=averageFirstSymb] {
 	font-size: 13px;
 }
 
 [id~=headlineControl],
 [id~=goodCaptcha],
-[id~=average] {
+[id~=average],
+[id~=averageFirstSymb] {
 	color: white;
 }
 
