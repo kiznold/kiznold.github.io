@@ -895,18 +895,18 @@
                     recordArr.push(captchaRecord)
                 }
             };
-            localStorage.setItem("xCounterInputs", parseInt(localStorage.getItem("xCounterInputs") || 0) + 1);
-            localStorage.setItem("xCounterFirstSymb", parseInt(localStorage.getItem("xCounterFirstSymb") || 0) + 1);
             localStorage.setItem("xAllCaptcha", parseInt(localStorage.getItem("xAllCaptcha") || 0) + 1);
             if (captchaValid) {
+                localStorage.setItem("xCounterInputs", parseInt(localStorage.getItem("xCounterInputs") || 0) + 1);
+                localStorage.setItem("xCounterFirstSymb", parseInt(localStorage.getItem("xCounterFirstSymb") || 0) + 1);
                 localStorage.setItem("xGoodCaptcha", parseInt(localStorage.getItem("xGoodCaptcha") || 0) + 1);
                 localStorage.setItem("xAllInputs", parseFloat(localStorage.getItem("xAllInputs") || .0) + captchaTime)
                 localStorage.setItem("xAllFirstSymb", parseFloat(localStorage.getItem("xAllFirstSymb") || .0) + firstSymbol)
-            };
             
-            document.getElementById("average").innerText = `Средний ввод: ${(localStorage.getItem("xAllInputs") / localStorage.getItem("xCounterInputs")).toFixed(3)}s`
+                document.getElementById("average").innerText = `Средний ввод: ${(localStorage.getItem("xAllInputs") / localStorage.getItem("xCounterInputs")).toFixed(3)}s`
             document.getElementById("goodCaptcha").innerText = `Процент верных капч: ${Math.trunc((localStorage.getItem("xGoodCaptcha") / localStorage.getItem("xAllCaptcha")) * 100)}%`
             document.getElementById("averageFirstSymb").innerText = `Средний ввод первого символа: ${(localStorage.getItem("xAllFirstSymb") / localStorage.getItem("xCounterFirstSymb")).toFixed(3)}s`
+            };
             typeChat((isRecord ? "[РЕКОРД] " : "") + "Капча введена " + (captchaValid ? "" : "не") + "верно (" + morgen + '|' + captchaData + ') за ' + captchaTime + "s (первый символ: " + (firstSymbol != 0 ? firstSymbol + "s" : "нет") + (mode == 1 ? timeReact : "") + ")");
         }
 
