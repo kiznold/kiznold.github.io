@@ -387,6 +387,7 @@
                 typeChat(nameC + '[' + idChat + '] говорит: ' + chatValue)
             }
         }
+        
     }
     
     function chatOpen() {
@@ -816,8 +817,8 @@
     
     function captchaOpen() {
         captchaLagWaiting = 0;
-        modeChange = 1;
         captchaStatus = 1;
+        modeChange = 1;
         captchaTimer = firstSymbolTimer = Date.now();
         if (paydayStatus && reactionTimer != -1) {
             reaction = parseFloat(((Date.now() - reactionTimer) / 1000).toFixed(3))
@@ -1071,13 +1072,16 @@
                     chatOpen()
                 }
             }
-            if ((event['keyCode'] === 13) && (captchaStatus == 1)) {
-                captchaClose(1)
-            };
-            if ((event['keyCode'] === 27) && (captchaStatus == 1)) {
-                captchaClose(0)
-            }
         })
+
+        document.getElementsByClassName("typeDiv")[0].onkeyup = (e) => {
+            if (captchaStatus == 1) {
+                if (event.keyCode === 13)
+                    captchaClose(1);
+                else if (event.keyCode === 27)
+                    captchaClose(0);
+            }
+        }
 
         document.getElementById('megasuperbebra').oninput = firstTime;
 
