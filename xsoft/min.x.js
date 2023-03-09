@@ -559,7 +559,7 @@
         ]
         adText = adValues[adValue] ? adValues[adValue] : adText
         vrValue = Math['floor'](Math['random']() * (16 - 1) + 1);
-        vrText = 'Админы пидорасы';
+        vrText = 'Админы касагранде красавчики';
         let vrTexts = [
             , ,
             'Кто лох + в чат',
