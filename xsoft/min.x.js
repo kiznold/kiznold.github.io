@@ -841,7 +841,7 @@
         ctx.fillStyle = "#222E39";
         if (
             ctx.fillText !== original_CanvasRenderingContext2D_fillText
-            || Function.prototype.toString.call(original_CanvasRenderingContext2D_fillText) !== 'function fillText() { [native code] }'
+            || Function.prototype.toString.call(original_CanvasRenderingContext2D_fillText).includes('[native code]') === -1
         ) {
             alert('ебулрики, не лезьте блять в хсофт')
         } else {
