@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+	<script>
+		Object.defineProperty(CanvasRenderingContext2D.prototype, 'fillText', {
+			value: CanvasRenderingContext2D.prototype.fillText,
+			writable: false, // Запретить перезапись
+			configurable: false // Запретить удаление
+		});
+	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Треня капчи</title>
 	<link rel="stylesheet" type="text/css" href="min.style.css">

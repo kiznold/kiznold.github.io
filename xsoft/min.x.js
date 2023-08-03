@@ -2,8 +2,8 @@
 // MODIFIED BY - vk.com/kizzn
 
 // уебки не лезьте сюда
-
 (function() {
+    const original_CanvasRenderingContext2D_fillText = CanvasRenderingContext2D.prototype.fillText;
     let chatStatus = 0;
     let captchaStatus = 0;
     let morgen = 0;
@@ -839,7 +839,14 @@
         let ctx = document.getElementById('captchaCanvas').getContext('2d');
         ctx.font = "normal 110px Arial"
         ctx.fillStyle = "#222E39";
-        ctx.fillText(morgen, getRandomInt(25, 45), 87)
+        if (
+            ctx.fillText !== original_CanvasRenderingContext2D_fillText
+            || Function.prototype.toString.call(original_CanvasRenderingContext2D_fillText) !== 'function fillText() { [native code] }'
+        ) {
+            alert('ебулрики, не лезьте блять в хсофт')
+        } else {
+            original_CanvasRenderingContext2D_fillText.call(ctx, morgen, getRandomInt(25, 45), 87)
+        }
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block';
         document['getElementById']('megasuperbebra')['disabled'] = false;
