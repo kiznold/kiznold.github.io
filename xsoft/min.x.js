@@ -1096,7 +1096,7 @@
         String.prototype.replace = () => "cheat";
 
         modeN();
-        /*const xxxxreklama233232323 = () =>*/ typeChat("[AD] Хочешь заказать скрипт, но не знаешь у кого? Просто воспользуйся нашим ботом https://www.blast.hk/threads/161825/");
+        /*const xxxxreklama233232323 = () =>*/ //typeChat("[AD] blah-blah-blah");
         /*xxxxreklama233232323();
         setInterval(xxxxreklama233232323, 60e3);*/
     }
