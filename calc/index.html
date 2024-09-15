@@ -31,23 +31,23 @@
        <title>Калькулятор налога</title>
        <iframe name="formAccept" id="formAccept" style="display: none;"></iframe> 
        <center>
-       <form target="formAccept" id="lolForm"> 
-       <br><input id="tax" min="1" max="104000" type="number" placeholder="Налог имущества" style="width: 10em" required />
-       <input id="taxInHour" min="1" type="number" placeholder="Налог в час" style="width: 10em" required /></br>
-       <br><input type="radio" id="onHouse" name="radiobutton" onclick="checkTaxForSetMax();" checked required/>На дом</br>
-       <br><input type="radio" id="onBiz" name="radiobutton" onclick="checkTaxForSetMax();" required/>На бизнес</br>
-       <br><input type="submit" id="finalButton" onclick="getTimeOfSale();" value="Узнать время до слета"/></br>
-       <br><input type="checkbox" id="sTRAHovka" onclick="strahov_ochka=this.checked;"/>Страховка<br>
-       <br>Считать с:</br>
-       <br><input type="radio" id="currentTime" name="time" onclick="disabledDate(true); RequiredDate(false);" checked required/>Текущего времени
-       <input type="radio" id="customDate" name="time" onclick="disabledDate(false); RequiredDate(true);" required/>Определенной даты</br>
-       <br>
-       <input type="date" id="inputDate" disabled required/> 
-         <select name="to" id="inputTime" disabled required>
-            <option value="">Выберите время..</option>
-        </select>
-       </br>
-       </form>
+              <form target="formAccept" id="lolForm"> 
+               <br><input id="tax" min="1" max="250000" type="number" placeholder="Налог имущества" style="width: 10em" required="">
+               <input id="taxInHour" min="1" type="number" placeholder="Налог в час" style="width: 10em" required=""><br>
+               <br><label><input type="radio" id="onHouse" name="radiobutton" onclick="checkTaxForSetMax();" checked="" required="">На дом</label></br>
+               <br><label><input type="radio" id="onBiz" name="radiobutton" onclick="checkTaxForSetMax();" required="">На бизнес</label></br>
+               <br><input type="submit" id="finalButton" onclick="getTimeOfSale();" value="Узнать время до слета"><br>
+               <br><label><input type="checkbox" id="sTRAHovka" onclick="strahov_ochka=this.checked;">Страховка</label></br>
+               <br>Считать с:<br>
+               <br><label><input type="radio" id="currentTime" name="time" onclick="disabledDate(true); RequiredDate(false);" checked="" required="">Текущего времени</label>
+               <label><input type="radio" id="customDate" name="time" onclick="disabledDate(false); RequiredDate(true);" required="">Определенной даты</label></form>
+               <br>
+               <input type="date" id="inputDate" disabled="" required=""> 
+                 <select name="to" id="inputTime" disabled="" required="">
+                    <option value="">Выберите время..</option>
+                    <option value="0">0:00</option><option value="1">1:00</option><option value="2">2:00</option><option value="3">3:00</option><option value="4">4:00</option><option value="5">5:00</option><option value="6">6:00</option><option value="7">7:00</option><option value="8">8:00</option><option value="9">9:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option><option value="14">14:00</option><option value="15">15:00</option><option value="16">16:00</option><option value="17">17:00</option><option value="18">18:00</option><option value="19">19:00</option><option value="20">20:00</option><option value="21">21:00</option><option value="22">22:00</option><option value="23">23:00</option></select>
+               <br>
+           </form>
        <div id="result"></div>
        <div id="result2"></div>
        <div id="copy"></div>
