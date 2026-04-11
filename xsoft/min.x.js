@@ -29,25 +29,15 @@
     let chatTyped = [];
     let lastValue = 0;
     let chatSteps = null;
-    let changedKey = 0;
     let changedKeyCode = 0;
-    let changedKeyName = 0;
     let changedKeyCodeNeed = 0;
-    let keyClicked = 0;
-    let validKey = 0;
     let openCaptchaKeyOne = 115;
     let openCaptchaKeyTwo = 78;
     let modeFcaptchaRequired = 0;
-    let rds = 0;
-    let rms = 0;
     let recordArr = [];
     let captchaLagStatus = 0;
-    let captchaLagHelp = 0;
     let captchaLagWaiting = 0;
     let zeroCaptchaStatus = 0;
-    let zeroCaptchaHelp = 0;
-    let captchaMinSize = 90;
-    let captchaMaxSize = 140;
     let captchaTimer = -1;
     let firstSymbolTimer = -1;
     let captchaRecord = -1;
@@ -56,16 +46,97 @@
     
     function newRecordX() {
         document.getElementById('headlineControl').innerText = 'Control [' + captchaRecord + 's]';
-        document['getElementById']('record')['style']['display'] = 'block';
-        document['getElementById']('recordS')['innerHTML'] = captchaRecord + 's';
+        document.getElementById('record').style.display = 'block';
+        document.getElementById('recordS').innerHTML = captchaRecord + 's';
         setTimeout(() => {
             document.getElementById('record').style.display = 'none';
         }, 1500)
     }
     
     function typeChat(text) {
-        document['getElementById']('chatArea')['value'] = document['getElementById']('chatArea')['value'] + text + '\x0A';
-        document['getElementById']('chatArea')['scrollTop'] = 450000 * 100 * 3;
+        document.getElementById('chatArea').value = document.getElementById('chatArea').value + text + '\x0A';
+        document.getElementById('chatArea').scrollTop = 450000 * 100 * 3;
+    }
+
+    function setDisplay(id, value) {
+        document.getElementById(id).style.display = value;
+    }
+
+    function setSelected(id, selected) {
+        document.getElementById(id).classList.toggle('btnSelected', selected);
+    }
+
+    function setCaptchaPanelsVisible(isVisible) {
+        const displayValue = isVisible ? 'block' : 'none';
+        document.getElementsByClassName('captchaDiv')[0].style.display = displayValue;
+        document.getElementsByClassName('typeDiv')[0].style.display = displayValue;
+    }
+
+    function runChatCommand(chatValue) {
+        const commands = {
+            '/time': function() {
+                time();
+            },
+            '/help': function() {
+                typeChat('');
+                typeChat('/help - помощь по командам');
+                typeChat('/buybiz - купить бизнес(открыть капчу командой)');
+                typeChat('/key - сбросить клавиши открытия капчи');
+                typeChat('/about - о создателе');
+                typeChat('/record - рекорды');
+                typeChat('/clear - очистить чат');
+                typeChat('/zero  - последняя цифра капчи 0');
+                typeChat('');
+            },
+            '/clear': function() {
+                for (var i = 0; i < 9; i++) {
+                    typeChat('')
+                }
+            },
+            '/zero': function() {
+                zeroCaptchaX();
+            },
+            '/about': function() {
+                typeChat('Сайт сделан Josip (Teor_New) для тренировки капчи, модифицирован и поддерживается k1zn\'ом.');
+            },
+            '/record': function() {
+                recordArr = recordArr.sort((a, b) => a - b);
+                if (recordArr.length > 0) {
+                    for (let i = 0; i < recordArr.length; i++) {
+                        typeChat((i + 1) + ") " + recordArr[i] + "s")
+                    }
+                } else {
+                    typeChat("Рекордов ещё нету!")
+                }
+            },
+            '/key': function() {
+                typeChat('Клавиши открытия капчи были сброшены, открыть капчу можно нажатием F4 или N');
+                openCaptchaKeyOne = 115;
+            },
+            '/buybiz': function() {
+                if (mode == 0) {
+                    captchaLagged()
+                }
+                if (mode == 1) {
+                    if (paydayStatus) {
+                        captchaLagged()
+                    }
+                    if (!paydayStatus) {
+                        typeChat('Сначала активируйте режим нажатием N')
+                    }
+                } else {
+                    if (mode != 0)
+                        typeChat('Данная команда доступна исключительно в режиме N');
+                }
+            }
+        };
+
+        const handler = commands[chatValue];
+        if (handler) {
+            handler();
+            return true;
+        }
+        return false;
     }
     
     function changeKey() {
@@ -77,18 +148,18 @@
         if (!modeChange) {
             if (document.body.style.background == '#454545') document.body.style.background='#383838';
             if (!chatGenerator) {
-                document['getElementById']('chatGen')['style']['display'] = 'none';
-                document['getElementById']('stopP')['style']['display'] = 'none';
-                document['getElementById']('modeN')['classList']['add']('btnSelected');
+                setDisplay('chatGen', 'none');
+                setDisplay('stopP', 'none');
+                setSelected('modeN', true);
                 if (mode) {
-                    document['getElementById']('modeP')['classList']['remove']('btnSelected')
+                    setSelected('modeP', false)
                 };
                 if (mode == 2) {
-                    document['getElementById']('modeF')['classList']['remove']('btnSelected')
+                    setSelected('modeF', false)
                 };
                 typeChat('Включен ручной режим ввода капчи, для открытия капчи нажмите N,F4 или же напишите в чат /buybiz (открыть чат на Т англ)');
                 mode = 0;
-                document['getElementById']('houseSale')['style']['display'] = 'none'
+                setDisplay('houseSale', 'none')
             };
             if (chatGenerator) {
                 typeChat('Выключите генератор строк чата')
@@ -102,18 +173,18 @@
         if (!modeChange) {
             if (document.body.style.background == '#454545') document.body.style.background='#383838';
             paydayAutoStatus = 0;
-            document['getElementById']('chatGen')['style']['display'] = 'inline-block';
-            document['getElementById']('stopP')['style']['display'] = 'inline-block';
-            document['getElementById']('modeP')['classList']['add']('btnSelected');
+            setDisplay('chatGen', 'inline-block');
+            setDisplay('stopP', 'inline-block');
+            setSelected('modeP', true);
             if (!mode) {
-                document['getElementById']('modeN')['classList']['remove']('btnSelected')
+                setSelected('modeN', false)
             };
             if (mode == 2) {
-                document['getElementById']('modeF')['classList']['remove']('btnSelected')
+                setSelected('modeF', false)
             };
             typeChat('Включен режим Payday, для начала нажмите N или F4, пейдей будет через 0.9-2с, для остановки нажмите кнопку Stop');
             mode = 1;
-            document['getElementById']('houseSale')['style']['display'] = 'block'
+            setDisplay('houseSale', 'block')
         } else {
             
             typeChat('Ошибка переключения режимов, закройте окно с капчей')
@@ -121,7 +192,7 @@
     }
     function enableCamC() {
         enableCamS = !enableCamS;
-        document['getElementById']('enableCam')['classList']['toggle']('btnSelected');
+        document.getElementById('enableCam').classList.toggle('btnSelected');
         typeChat(`HandCam режим ${enableCamS ? 'включен' : 'выключен'}`);
         const width = 320;
         let height = 0;
@@ -141,7 +212,7 @@
         })
         .catch(function(err) {
             enableCamS = false;
-            document['getElementById']('enableCam')['classList']['remove']('btnSelected');
+            document.getElementById('enableCam').classList.remove('btnSelected');
             typeChat('Не удалось включить HandCam режим! Подробнее в F12')
             console.log("HANDCAM error occurred: " + err);
         });
@@ -167,17 +238,17 @@
                 if (captchaLagStatus == 1) {
                     captchaLag()
                 };
-                document['getElementById']('chatGen')['style']['display'] = 'none';
-                document['getElementById']('stopP')['style']['display'] = 'inline-block';
-                document['getElementById']('modeF')['classList']['add']('btnSelected');
+                setDisplay('chatGen', 'none');
+                setDisplay('stopP', 'inline-block');
+                setSelected('modeF', true);
                 if (!mode) {
-                    document['getElementById']('modeN')['classList']['remove']('btnSelected')
+                    setSelected('modeN', false)
                 };
                 if (mode) {
-                    document['getElementById']('modeP')['classList']['remove']('btnSelected')
+                    setSelected('modeP', false)
                 };
                 mode = 2;
-                document['getElementById']('houseSale')['style']['display'] = 'none';
+                setDisplay('houseSale', 'none');
                 
                 typeChat('Включен режим зацикленной капчи. Для начала нажмите N, после ввода капчи сразу же откроется новая')
             }
@@ -188,34 +259,22 @@
     }
     
     function captchaLag() {
-        if (mode < 2) {
-            if (!captchaLagHelp) {
-                if (captchaLagStatus) {
-                    captchaLagStatus = 0;
-                    captchaLagHelp = 1;
-                    typeChat('Выключен режим лагов капчи(симуляция пинга)');
-                    document['getElementById']('captchaLag')['classList']['remove']('btnSelected')
-                }
-            };
-            if (!captchaLagHelp) {
-                if (!captchaLagStatus) {
-                    captchaLagStatus = 1;
-                    captchaLagHelp = 1;
-                    typeChat('Включен режим лагов капчи(симуляция пинга)');
-                    document['getElementById']('captchaLag')['classList']['add']('btnSelected')
-                }
-            };
-            captchaLagHelp = 0
-        } else {
+        if (mode >= 2) {
             typeChat('Ошибка режимов');
-            
+            return;
         }
+
+        captchaLagStatus = captchaLagStatus ? 0 : 1;
+        setSelected('captchaLag', !!captchaLagStatus);
+        typeChat(captchaLagStatus
+            ? 'Включен режим лагов капчи(симуляция пинга)'
+            : 'Выключен режим лагов капчи(симуляция пинга)');
     }
     
     function captchaLagged() {
         if (!captchaLagWaiting) {
             if (captchaLagStatus) {
-                captchaOpenDelay = Math['floor'](Math['random']() * (250 - 10) + 10);
+                captchaOpenDelay = Math.floor(Math.random() * (250 - 10) + 10);
                 
                 setTimeout(captchaOpen, captchaOpenDelay);
                 captchaLagWaiting = 1
@@ -227,54 +286,41 @@
     }
     
     function zeroCaptchaX() {
-        if (!zeroCaptchaHelp) {
-            if (zeroCaptchaStatus) {
-                zeroCaptchaStatus = 0;
-                zeroCaptchaHelp = 1;
-                typeChat('Капча с окончанием на 0 выключена');
-                
-            }
-        };
-        if (!zeroCaptchaHelp) {
-            if (!zeroCaptchaStatus) {
-                zeroCaptchaStatus = 1;
-                zeroCaptchaHelp = 1;
-                typeChat('Капча с окончанием на 0 включена');
-                
-            }
-        };
-        zeroCaptchaHelp = 0
+        zeroCaptchaStatus = zeroCaptchaStatus ? 0 : 1;
+        typeChat(zeroCaptchaStatus
+            ? 'Капча с окончанием на 0 включена'
+            : 'Капча с окончанием на 0 выключена');
     }
 
-    var checkv = document['getElementById']('chatInpt')['addEventListener']('keyup', function(_0xb162x10) {
-        _0xb162x10['preventDefault']();
-        if (_0xb162x10['keyCode'] === 38) {
+    document.getElementById('chatInpt').addEventListener('keyup', function(keyEvent) {
+        keyEvent.preventDefault();
+        if (keyEvent.keyCode === 38) {
             if (chatSteps == null) {
-                lastValue = document['getElementById']('chatInpt')['value'];
-                chatSteps = chatTyped['length']
+                lastValue = document.getElementById('chatInpt').value;
+                chatSteps = chatTyped.length
             };
             if (chatSteps > 0) {
                 chatSteps = chatSteps - 1
             };
             
-            if (chatTyped['length'] > 0) {
-                document['getElementById']('chatInpt')['value'] = chatTyped[chatSteps]
+            if (chatTyped.length > 0) {
+                document.getElementById('chatInpt').value = chatTyped[chatSteps]
             }
         };
-        if (_0xb162x10['keyCode'] === 40) {
+        if (keyEvent.keyCode === 40) {
             
-            if (chatSteps <= chatTyped['length'] - 1) {
+            if (chatSteps <= chatTyped.length - 1) {
                 chatSteps = chatSteps + 1;
-                document['getElementById']('chatInpt')['value'] = chatTyped[chatSteps];
-                if (chatSteps == chatTyped['length']) {
-                    document['getElementById']('chatInpt')['value'] = lastValue
+                document.getElementById('chatInpt').value = chatTyped[chatSteps];
+                if (chatSteps == chatTyped.length) {
+                    document.getElementById('chatInpt').value = lastValue
                 }
             }
         };
-        if (_0xb162x10['keyCode'] === 27) {
+        if (keyEvent.keyCode === 27) {
             chatClose()
         };
-        if (_0xb162x10['keyCode'] === 13) {
+        if (keyEvent.keyCode === 13) {
             chatText();
             chatClose()
         };
@@ -283,98 +329,18 @@
     
     function chatText() {
         
-        chatValue = document['getElementById']('chatInpt')['value'];
-        chatTyped['push'](chatValue);
+        chatValue = document.getElementById('chatInpt').value;
+        chatTyped.push(chatValue);
         
         if (chatValue[0] == '/') {
-            commandValid = 0;
-            if (chatValue == '/time') {
-                
-                time();
-                commandValid = 1
-            };
-            if (chatValue == '/help') {
-                
-                typeChat('');
-                typeChat('/help - помощь по командам');
-                typeChat('/buybiz - купить бизнес(открыть капчу командой)');
-                typeChat('/key - сбросить клавиши открытия капчи');
-                typeChat('/about - о создателе');
-                //typeChat('/contact - контакты');
-                typeChat('/record - рекорды');
-                typeChat('/clear - очистить чат');
-                typeChat('/zero  - последняя цифра капчи 0');
-                typeChat('');
-                commandValid = 1
-            };
-            if (chatValue == '/clear') {
-                
-                for (var _0xb162x13 = 0; _0xb162x13 < 9; _0xb162x13++) {
-                    typeChat('')
-                };
-                commandValid = 1
-            };
-            if (chatValue == '/zero') {
-                
-                zeroCaptchaX();
-                commandValid = 1
-            };
-            if (chatValue == '/about') {
-                
-                typeChat('Сайт сделан Josip (Teor_New) для тренировки капчи, модифицирован и поддерживается k1zn\'ом.');
-                commandValid = 1
-            };
-            if (chatValue == '/record') {
-                recordArr = recordArr.sort((a, b) => a - b);
-                if (recordArr.length > 0) {
-                    for (let i = 0; i < recordArr.length; i++) {
-                        typeChat((i + 1) + ") " + recordArr[i] + "s")
-                    }
-                } else {
-                    typeChat("Рекордов ещё нету!")
-                }
-                commandValid = 1
-            };
-            // if (chatValue == '/contact') {
-                
-            //     typeChat('Группа ВК - vk.com/xgangsoft');
-            //     typeChat('Страница ВК - vk.com/alexander_1919');
-            //     commandValid = 1
-            // };
-            if (chatValue == '/key') {
-                
-                typeChat('Клавиши открытия капчи были сброшены, открыть капчу можно нажатием F4 или N');
-                openCaptchaKeyOne = 115;
-                commandValid = 1
-            };
-            if (chatValue == '/buybiz') {
-                if (mode == 0) {
-                    
-                    captchaLagged()
-                };
-                if (mode == 1) {
-                    if (paydayStatus) {
-                        
-                        captchaLagged()
-                    };
-                    if (!paydayStatus) {
-                        typeChat('Сначала активируйте режим нажатием N')
-                    }
-                } else {
-                    if (mode != 0)
-                        typeChat('Данная команда доступна исключительно в режиме N');
-                    
-                };
-                commandValid = 1
-            };
-            if (commandValid == 0) {
+            if (!runChatCommand(chatValue)) {
                 typeChat('[Ошибка] Неизвестная команда! Введите /help для просмотра доступных функций.')
             }
         };
         if (chatValue[0] != '/') {
             if (!zaprosFCaptchi) {
-                nameChat = Math['floor'](Math['random']() * (5 - 1) + 1);
-                idChat = Math['floor'](Math['random']() * (1001 - 1) + 1);
+                nameChat = Math.floor(Math.random() * (5 - 1) + 1);
+                idChat = Math.floor(Math.random() * (1001 - 1) + 1);
                 nameC = 'Developer_Patcher';
                 if (nameChat == 2) {
                     nameC = 'Teor_New'
@@ -395,127 +361,32 @@
         
         chatStatus = 1;
         if (captchaStatus) {
-            document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'none';
-            document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'none'
+            setCaptchaPanelsVisible(false)
         };
-        document['getElementById']('chatInpt')['style']['display'] = 'block';
-        document['getElementById']('chatInpt')['disabled'] = false;
-        document.querySelector('#chatInpt')['focus']()
+        document.getElementById('chatInpt').style.display = 'block';
+        document.getElementById('chatInpt').disabled = false;
+        document.querySelector('#chatInpt').focus()
     }
     
     function chatClose() {
         
         if (captchaStatus) {
-            document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
-            document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block'
+            setCaptchaPanelsVisible(true)
         };
-        document['getElementById']('chatInpt')['style']['display'] = 'none';
-        document['getElementById']('chatInpt')['value'] = null;
-        document['getElementById']('chatInpt')['disabled'] = true;
+        document.getElementById('chatInpt').style.display = 'none';
+        document.getElementById('chatInpt').value = null;
+        document.getElementById('chatInpt').disabled = true;
         chatStatus = 0;
         lastValue = 0;
         chatSteps = null
     }
-    // var base = 60;
-    // var clocktimer, dateObj, dh, dm, ds, ms;
-    // var readout = '';
-    // var h = 1,
-    //     m = 1,
-    //     tm = 1,
-    //     s = 0,
-    //     ts = 0,
-    //     ms = 0,
-    //     init = 0;
-    
-    // function ClearСlock() {
-    //     clearTimeout(clocktimer);
-    //     h = 1;
-    //     m = 1;
-    //     tm = 1;
-    //     s = 0;
-    //     ts = 0;
-    //     ms = 0;
-    //     init = 0;
-    //     readout = '00:00:00'
-    // }
-    
-    // function StartTIME() {
-    //     var _0xb162x26 = new Date();
-    //     var _0xb162x27 = (_0xb162x26['getTime']() - dateObj['getTime']()) - (s * 1000);
-    //     if (_0xb162x27 > 999) {
-    //         s++
-    //     };
-    //     if (s >= (m * base)) {
-    //         ts = 0;
-    //         m++
-    //     } else {
-    //         ts = parseInt((ms / 100) + s);
-    //         if (ts >= base) {
-    //             ts = ts - ((m - 1) * base)
-    //         }
-    //     };
-    //     if (m > (h * base)) {
-    //         tm = 1;
-    //         h++
-    //     } else {
-    //         tm = parseInt((ms / 100) + m);
-    //         if (tm >= base) {
-    //             tm = tm - ((h - 1) * base)
-    //         }
-    //     };
-    //     ms = Math['round'](_0xb162x27 / 10);
-    //     if (ms > 99) {
-    //         ms = 0
-    //     };
-    //     if (ms == 0) {
-    //         ms = '00'
-    //     };
-    //     if (ms > 0 && ms <= 9) {
-    //         ms = '0' + ms
-    //     };
-    //     if (ts > 0) {
-    //         ds = ts
-    //     } else {
-    //         ds = '00'
-    //     };
-    //     dm = tm - 1;
-    //     if (dm > 0) {
-    //         if (dm < 10) {
-    //             dm = '0' + dm
-    //         }
-    //     } else {
-    //         dm = '00'
-    //     };
-    //     dh = h - 1;
-    //     if (dh > 0) {
-    //         if (dh < 10) {
-    //             dh = '0' + dh
-    //         }
-    //     } else {
-    //         dh = '00'
-    //     };
-    //     readout = ds + ':' + ms;
-    //     clocktimer = setTimeout(StartTIME, 1)
-    // }
-    
-    // function StartStop() {
-    //     if (!init) {
-    //         ClearСlock();
-    //         dateObj = new Date();
-    //         StartTIME();
-    //         init = 1
-    //     } else {
-    //         clearTimeout(clocktimer);
-    //         init = 0
-    //     }
-    // }
-    
+
     function chatStr() {
-        chatStrValue = Math['floor'](Math['random']() * (6 - 1) + 1);
-        chatIdRand = Math['floor'](Math['random']() * (1001 - 1) + 1);
-        chatPhoneNumRand = Math['floor'](Math['random']() * (10000000 - 1000000) + 1000000);
-        chatAIdRand = Math['floor'](Math['random']() * (1001 - 1) + 1);
-        chatNameRand = Math['floor'](Math['random']() * (5 - 1) + 1);
+        chatStrValue = Math.floor(Math.random() * (6 - 1) + 1);
+        chatIdRand = Math.floor(Math.random() * (1001 - 1) + 1);
+        chatPhoneNumRand = Math.floor(Math.random() * (10000000 - 1000000) + 1000000);
+        chatAIdRand = Math.floor(Math.random() * (1001 - 1) + 1);
+        chatNameRand = Math.floor(Math.random() * (5 - 1) + 1);
         nameCHR = 'Developer_Patcher';
         let randomNames = [
             , ,
@@ -524,10 +395,10 @@
             'Oleg_Vasilievich'
         ]
         nameCHR = randomNames[chatNameRand] ? randomNames[chatNameRand] : nameCHR
-        chatNameAdminRand = Math['floor'](Math['random']() * (5 - 1) + 1);
+        chatNameAdminRand = Math.floor(Math.random() * (5 - 1) + 1);
         nameCHAR = 'Developer_Patcher';
         nameCHAR = randomNames[chatNameAdminRand] ? randomNames[chatNameAdminRand] : nameCHAR
-        banValue = Math['floor'](Math['random']() * (8 - 1) + 1);
+        banValue = Math.floor(Math.random() * (8 - 1) + 1);
         banReason = 'пидорас';
         let banReasons = [
             , ,
@@ -539,7 +410,7 @@
             'бот'
         ]
         banReason = banReasons[banValue] ? banReasons[banValue] : banReason
-        adValue = Math['floor'](Math['random']() * (16 - 1) + 1);
+        adValue = Math.floor(Math.random() * (16 - 1) + 1);
         adText = 'Куплю мозг. Цена договорная';
         let adValues = [
             , ,
@@ -559,7 +430,7 @@
             'Продам бизнес Ларек. 20.000.000'
         ]
         adText = adValues[adValue] ? adValues[adValue] : adText
-        vrValue = Math['floor'](Math['random']() * (16 - 1) + 1);
+        vrValue = Math.floor(Math.random() * (16 - 1) + 1);
         vrText = 'Админы касагранде красавчики';
         let vrTexts = [
             , ,
@@ -579,7 +450,7 @@
             'Хотите Сыграть В Орла Решку. То Едте В Бар 228, Ставки До 600К ( /Финдибиз 228 ).'
         ]
         vrText = vrTexts[vrValue] ? vrTexts[vrValue] : vrText
-        textValue = Math['floor'](Math['random']() * (8 - 1) + 1);
+        textValue = Math.floor(Math.random() * (8 - 1) + 1);
         textText = 'qq';
         let textValues = [
             , ,
@@ -609,44 +480,30 @@
             typeChat(nameCHR + '[' + chatIdRand + '] говорит: ' + textText)
         };
         if (chatGenerator == 1) {
-            cZaderjka = Math['floor'](Math['random']() * (4000 - 1500) + 1500);
+            cZaderjka = Math.floor(Math.random() * (4000 - 1500) + 1500);
             
             setTimeout(chatStr, cZaderjka)
         }
     }
     
     function chatGen() {
-        chatGenStatus = 0;
-        if (!chatGenStatus) {
-            if (!chatGenerator) {
-                typeChat('Генератор строк чата включен');
-                chatGenerator = 1;
-                
-                chatGenStatus = 1;
-                document['getElementById']('chatGen')['classList']['add']('btnSelected');
-                chatStr()
-            }
-        };
-        if (!chatGenStatus) {
-            if (chatGenerator) {
-                typeChat('Генератор строк чата выключен');
-                chatGenerator = 0;
-                
-                chatGenStatus = 1;
-                
-                document['getElementById']('chatGen')['classList']['remove']('btnSelected')
-            }
-        };
-        chatGenStatus = 0
+        chatGenerator = chatGenerator ? 0 : 1;
+        setSelected('chatGen', !!chatGenerator);
+        typeChat(chatGenerator
+            ? 'Генератор строк чата включен'
+            : 'Генератор строк чата выключен');
+        if (chatGenerator) {
+            chatStr()
+        }
     }
     
     function time() {
-        timePlayed = Math['floor'](Math['random']() * (60 - 1) + 1);
-        var _0xb162x2e = new Date();
-        dHours = _0xb162x2e['getHours']();
-        dMin = _0xb162x2e['getMinutes']();
-        dDate = _0xb162x2e['getDate']();
-        dMonth = _0xb162x2e['getMonth']();
+        timePlayed = Math.floor(Math.random() * (60 - 1) + 1);
+        var currentDate = new Date();
+        dHours = currentDate.getHours();
+        dMin = currentDate.getMinutes();
+        dDate = currentDate.getDate();
+        dMonth = currentDate.getMonth();
         if (dMonth == 0) {
             dMonth = 'january'
         };
@@ -683,21 +540,21 @@
         if (dMonth == 11) {
             dMonth = 'december'
         };
-        document['getElementsByClassName']('month')[0]['innerHTML'] = dDate + ' ' + dMonth;
-        document['getElementsByClassName']('hours')[0]['innerHTML'] = dHours + ':' + dMin;
-        document['getElementsByClassName']('playedGreen')[0]['innerHTML'] = timePlayed + ' min';
-        document['getElementsByClassName']('time')[0]['style']['display'] = 'block';
+        document.getElementsByClassName('month')[0].innerHTML = dDate + ' ' + dMonth;
+        document.getElementsByClassName('hours')[0].innerHTML = dHours + ':' + dMin;
+        document.getElementsByClassName('playedGreen')[0].innerHTML = timePlayed + ' min';
+        document.getElementsByClassName('time')[0].style.display = 'block';
         setTimeout(() => {
             document.getElementsByClassName('time')[0].style.display = 'none';
         }, 5000)
     }
     
-    function fakeCaptcha(_0xb162x30) {
-        captchaFake = _0xb162x30;
+    function fakeCaptcha(fakeValue) {
+        captchaFake = fakeValue;
         if (captchaFake != 0) {
             if ((captchaFake > 9999) && (captchaFake < 100000)) {
                 fakeStatus = 1;
-                fCaptcha = _0xb162x30;
+                fCaptcha = fakeValue;
                 
             } else {
                 
@@ -719,27 +576,26 @@
         typeChat('Текущая сумма в банке: $0');
         typeChat('______________________________');
         typeChat('');
-        nameRand = Math['floor'](Math['random']() * (5 - 1) + 1);
-        numberRand = Math['floor'](Math['random']() * (1025 - 1) + 1);
-        classRand = Math['floor'](Math['random']() * (6 - 1) + 1);
+        nameRand = Math.floor(Math.random() * (5 - 1) + 1);
+        numberRand = Math.floor(Math.random() * (1025 - 1) + 1);
+        classRand = Math.floor(Math.random() * (6 - 1) + 1);
         
         name = "Developer_Patcher";
         paydayAutoStatus = 1;
         reactionTimer = Date.now();
-        // StartStop();
-        
-        
+
+
         paydayStatus = 1;
         paydayHelp = 0;
-        document['getElementById']('homeNotGos')['style']['display'] = 'none';
-        document['getElementById']('owner')['innerHTML'] = name;
-        document['getElementById']('number')['innerHTML'] = numberRand;
-        document['getElementById']('class')['innerHTML'] = classRand;
-        document['getElementById']('numberG')['innerHTML'] = numberRand;
-        document['getElementById']('classG')['innerHTML'] = classRand;
-        document['getElementById']('homeGos')['style']['display'] = 'block';
-        document['getElementById']('payday')['style']['display'] = 'block';
-        document['getElementsByClassName']('time')[0]['style']['display'] = 'none';
+        document.getElementById('homeNotGos').style.display = 'none';
+        document.getElementById('owner').innerHTML = name;
+        document.getElementById('number').innerHTML = numberRand;
+        document.getElementById('class').innerHTML = classRand;
+        document.getElementById('numberG').innerHTML = numberRand;
+        document.getElementById('classG').innerHTML = classRand;
+        document.getElementById('homeGos').style.display = 'block';
+        document.getElementById('payday').style.display = 'block';
+        document.getElementsByClassName('time')[0].style.display = 'none';
         setTimeout(() => {
             document.getElementById('payday').style.display = 'none';
         }, 4000)
@@ -751,7 +607,7 @@
                 paydayDo = 0;
                 paydayHelp = 1;
                 
-                zaderjka = Math['floor'](Math['random']() * (2500 - 900) + 900);
+                zaderjka = Math.floor(Math.random() * (2500 - 900) + 900);
                 setTimeout(payday, zaderjka);
                 
                 nStatus = 1;
@@ -768,16 +624,16 @@
         paydayStatus = 0;
         nStatus = 0;
         pressedN = 0;
-        document['getElementById']('homeNotGos')['style']['display'] = 'block';
-        document['getElementById']('homeGos')['style']['display'] = 'none';
+        document.getElementById('homeNotGos').style.display = 'block';
+        document.getElementById('homeGos').style.display = 'none';
         modeChange = 0;
         
         document.body.style.background = '#383838'
     }
     
     function firstTime() {
-        let getInput = document['getElementById'](_rId)['value'];
-        inputLength = getInput['length'];
+        let getInput = document.getElementById(_rId).value;
+        inputLength = getInput.length;
         if (!firstSymbolStatus) {
             if (inputLength == 1) {
                 if ((getInput > -1) && (getInput < 10)) {
@@ -804,8 +660,8 @@
                 captchaClose(0);
             }
         }
-        document['getElementById']('modeP')['classList']['remove']('btnSelected');
-        document['getElementById']('modeF')['classList']['remove']('btnSelected'); // lmao
+        setSelected('modeP', false);
+        setSelected('modeF', false); // lmao
         mode = 0;
         modeChange = 0;
     }
@@ -904,11 +760,11 @@
             morgen = fCaptcha
         };
         if (fakeStatus == 0) {
-            morgen = Math['floor'](Math['random']() * (100000 - 10000) + 10000)
+            morgen = Math.floor(Math.random() * (100000 - 10000) + 10000)
         };
         if (!fakeStatus) {
             if (zeroCaptchaStatus) {
-                morgen = Math['floor'](Math['random']() * (10000 - 1000) + 1000) * 10
+                morgen = Math.floor(Math.random() * (10000 - 1000) + 1000) * 10
             }
         };
         let ctx = document.getElementById('captchaCanvas').getContext('2d');
@@ -926,17 +782,26 @@
         } else {
             drawArzCaptcha(ctx, morgen);
         }
-        document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
-        document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block';
-        document['getElementById'](_rId)['disabled'] = false;
+        setCaptchaPanelsVisible(true);
+        document.getElementById(_rId).disabled = false;
         
-        document['getElementById'](_rId)['focus']();
+        document.getElementById(_rId).focus();
         
     }
 
-    function goodParseInt(somethin) {
-        let parsed = parseInt(somethin)
-        return isNaN(parsed) ? 0 : parsed
+    function isScriptTampered() {
+        let isTampered = false;
+        try {
+            if (!Function.prototype.call.toString().includes('[native code]')) isTampered = true;
+            let descriptor = Object.getOwnPropertyDescriptor(Function.prototype, 'call');
+            if (descriptor && descriptor.value && descriptor.value.toString().includes('apply')) isTampered = true;
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            if (Function.prototype.call.toString() !== iframe.contentWindow.Function.prototype.call.toString()) isTampered = true;
+            document.body.removeChild(iframe);
+        } catch (e) {}
+        return isTampered;
     }
     
     function captchaClose(cType) {
@@ -944,18 +809,7 @@
             typeChat("[ВНИМАНИЕ] Последний ввод был осуществлен с читом \"только цифры\"");
             
         if (cType == 1) {
-            let isTampered = false;
-            try {
-                if (!Function.prototype.call.toString().includes('[native code]')) isTampered = true;
-                let descriptor = Object.getOwnPropertyDescriptor(Function.prototype, 'call');
-                if (descriptor && descriptor.value && descriptor.value.toString().includes('apply')) isTampered = true;
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                document.body.appendChild(iframe);
-                if (Function.prototype.call.toString() !== iframe.contentWindow.Function.prototype.call.toString()) isTampered = true;
-                document.body.removeChild(iframe);
-            } catch (e) {}
-            if (isTampered) {
+            if (isScriptTampered()) {
                 typeChat("[ВНИМАНИЕ] Обнаружено вмешательство в скрипт сайта, возможен keyspoof");
             }
         }
@@ -965,16 +819,15 @@
         captchaStatus = 0;
         captchaValid = 0;
         timeReact = '';
-        let cValue = document['getElementById'](_rId)['value'];
+        let cValue = document.getElementById(_rId).value;
         let captchaTime = parseFloat(((Date.now() - captchaTimer) / 1000).toFixed(3))
         captchaData = cValue
         if (cType == 1) {
             captchaValid = (morgen+"" == captchaData)
         };
-        document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'none';
-        document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'none';
-        document['getElementById'](_rId)['value'] = null;
-        document['getElementById'](_rId)['disabled'] = true;
+        setCaptchaPanelsVisible(false);
+        document.getElementById(_rId).value = null;
+        document.getElementById(_rId).disabled = true;
 
         let canvas = document.getElementById("captchaCanvas");
         let ctx = canvas.getContext("2d");
@@ -1023,66 +876,66 @@
             }
         }
     }
-    var ball = document['getElementById']('houseSale');
-    ball['onmousedown'] = function(_0xb162x8) {
-        var _0xb162x3c = getCoords(ball);
-        var _0xb162x3d = _0xb162x8['pageX'] - _0xb162x3c['left'];
-        var _0xb162x3e = _0xb162x8['pageY'] - _0xb162x3c['top'];
-        ball['style']['position'] = 'absolute';
-        document['body']['appendChild'](ball);
-        _0xb162x3f(_0xb162x8);
-        ball['style']['zIndex'] = -1;
+    var ball = document.getElementById('houseSale');
+    ball.onmousedown = function(mouseEvent) {
+        var ballCoords = getCoords(ball);
+        var shiftX = mouseEvent.pageX - ballCoords.left;
+        var shiftY = mouseEvent.pageY - ballCoords.top;
+        ball.style.position = 'absolute';
+        document.body.appendChild(ball);
+        moveAt(mouseEvent);
+        ball.style.zIndex = -1;
     
-        function _0xb162x3f(_0xb162x8) {
-            ball['style']['left'] = _0xb162x8['pageX'] - _0xb162x3d + 'px';
-            ball['style']['top'] = _0xb162x8['pageY'] - _0xb162x3e + 'px'
+        function moveAt(mouseEvent) {
+            ball.style.left = mouseEvent.pageX - shiftX + 'px';
+            ball.style.top = mouseEvent.pageY - shiftY + 'px'
         }
-        document['onmousemove'] = function(_0xb162x8) {
-            _0xb162x3f(_0xb162x8);
-            document['getElementById']('notice')['style']['display'] = 'none'
+        document.onmousemove = function(mouseEvent) {
+            moveAt(mouseEvent);
+            document.getElementById('notice').style.display = 'none'
         };
-        ball['onmouseup'] = function() {
-            document['onmousemove'] = null;
-            ball['onmouseup'] = null
+        ball.onmouseup = function() {
+            document.onmousemove = null;
+            ball.onmouseup = null
         }
     };
     
-    function getCoords(_0xb162x41) {
-        var _0xb162x42 = _0xb162x41['getBoundingClientRect']();
+    function getCoords(element) {
+        var box = element.getBoundingClientRect();
         return {
-            top: _0xb162x42['top'] + pageYOffset,
-            left: _0xb162x42['left'] + pageXOffset
+            top: box.top + pageYOffset,
+            left: box.left + pageXOffset
         }
     }
     
-    function click(_0xb162x8) {
-        if (document['all']) {
-            if (event['button'] == 2) {
+    function click(mouseEvent) {
+        if (document.all) {
+            if (event.button == 2) {
                 return false
             }
         };
-        if (document['layers']) {
-            if (_0xb162x8['which'] == 3) {
+        if (document.layers) {
+            if (mouseEvent.which == 3) {
                 return false
             }
         }
     }
-    if (document['layers']) {
-        document['captureEvents'](Event.MOUSEDOWN)
+    if (document.layers) {
+        document.captureEvents(Event.MOUSEDOWN)
     };
-    document['onmousedown'] = click;
-    document['oncontextmenu'] = function(_0xb162x8) {
+    document.onmousedown = click;
+    document.oncontextmenu = function(mouseEvent) {
         return false
     };
     
     function controlHide() {
-        document['getElementById']('control')['style']['display'] = 'none';
-        document['getElementById']('openControl')['style']['display'] = 'block'
+        document.getElementById('control').style.display = 'none';
+        document.getElementById('openControl').style.display = 'block'
     }
     
     function controlOpen() {
-        document['getElementById']('control')['style']['display'] = 'block';
-        document['getElementById']('openControl')['style']['display'] = 'none'
+        document.getElementById('control').style.display = 'block';
+        document.getElementById('openControl').style.display = 'none'
     }
     
     let _rId = 'id_' + Math.random().toString(36).substr(2, 9);
@@ -1122,17 +975,13 @@
         document.getElementById("average").innerText = `Средний ввод: ${((localStorage.getItem("xxAllInputs") || 0) / (localStorage.getItem("xxCounterInputs") || 1)).toFixed(3)}s`
         document.getElementById("averageFirstSymb").innerText = `Средний ввод первого символа: ${((localStorage.getItem("xxAllFirstSymb") || 0) / (localStorage.getItem("xxCounterFirstSymb") || 1)).toFixed(3)}s`
 
-        document.addEventListener('keyup', function(_0xb162x8) {
-            keyClicked = 1;
+        document.addEventListener('keyup', function(mouseEvent) {
             let blockedKeys = [17, 16, 20, 9, 8, 27, 32, 91, 18, 78]
             if (changedKeyCodeNeed) {
                 changedKeyCodeNeed = 0;
                 if (blockedKeys.indexOf(event.keyCode) === -1) {
-                    changedKeyCode = event['keyCode'];
-                    changedKeyName = event['key'];
-                    changedKey = 1;
-                    validKey = 1;
-                    typeChat('Кнопка открытия капчи была изменена (' + event['key'] + '), также открыть капчу можно нажатием на N');
+                    changedKeyCode = event.keyCode;
+                    typeChat('Кнопка открытия капчи была изменена (' + event.key + '), также открыть капчу можно нажатием на N');
                     typeChat('При обновлении страницы все настройки будут сброшены, также вернуть все к настройкам по умолчанию можно командой /key');
                     openCaptchaKeyOne = changedKeyCode
                 } else {
@@ -1140,15 +989,15 @@
                     typeChat('Запрещены: ALT, CTRL, SHIFT, WIN, SPACE, ESC, BACKSPACE, CAPSLOCK, TAB, N');
                 }
             };
-            if ((event['keyCode'] === openCaptchaKeyOne) || (event['keyCode'] === openCaptchaKeyTwo)) { 
+            if ((event.keyCode === openCaptchaKeyOne) || (event.keyCode === openCaptchaKeyTwo)) { 
                 key = 'n';
-                if (event['keyCode'] == 115) {
+                if (event.keyCode == 115) {
                     key = 'f4'
                 };
                 if ((!chatStatus) && (!captchaStatus)) {
                     
                     if (mode == 0) {
-                        document['getElementById']('chatInpt')['disabled'] = false;
+                        document.getElementById('chatInpt').disabled = false;
                         captchaLagged();
                     };
                     if (mode == 1) {
@@ -1158,7 +1007,7 @@
                             }
                         };
                         if (paydayStatus) {
-                            document['getElementById']('chatInpt')['disabled'] = false;
+                            document.getElementById('chatInpt').disabled = false;
                             // reaction = readout;
                             // StartStop();
                             
@@ -1167,7 +1016,7 @@
                         } else {
                             if (nStatus) {
                                 if (pressedN > -1) {
-                                    variant = Math['floor'](Math['random']() * (4 - 1) + 1);
+                                    variant = Math.floor(Math.random() * (4 - 1) + 1);
                                     
                                     if (variant != 3) {
                                         typeChat('[Ошибка] Не флуди!')
@@ -1189,7 +1038,7 @@
                     }
                 }
             };
-            if ((event['keyCode'] === 84) && (captchaStatus == 0)) {
+            if ((event.keyCode === 84) && (captchaStatus == 0)) {
                 if (!chatStatus) {
                     
                     chatOpen()
@@ -1212,8 +1061,6 @@
         String.prototype.replace = () => "cheat";
 
         modeN();
-        /*const xxxxreklama233232323 = () =>*/ //typeChat("[AD] blah-blah-blah");
-        /*xxxxreklama233232323();
-        setInterval(xxxxreklama233232323, 60e3);*/
     }
 })()
+
