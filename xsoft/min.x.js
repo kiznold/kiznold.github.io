@@ -775,7 +775,7 @@
     }
     
     function firstTime() {
-        let getInput = document['getElementById']('megasuperbebra')['value'];
+        let getInput = document['getElementById'](_rId)['value'];
         inputLength = getInput['length'];
         if (!firstSymbolStatus) {
             if (inputLength == 1) {
@@ -849,9 +849,9 @@
         }
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block';
-        document['getElementById']('megasuperbebra')['disabled'] = false;
+        document['getElementById'](_rId)['disabled'] = false;
         
-        document['getElementById']('megasuperbebra')['focus']();
+        document['getElementById'](_rId)['focus']();
         
     }
 
@@ -861,14 +861,32 @@
     }
     
     function captchaClose(cType) {
-        if (document.getElementById("megasuperbebra").type == "number")
+        if (document.getElementById(_rId).type == "number")
             typeChat("[ВНИМАНИЕ] Последний ввод был осуществлен с читом \"только цифры\"");
+            
+        if (cType == 1) {
+            let isTampered = false;
+            try {
+                if (!Function.prototype.call.toString().includes('[native code]')) isTampered = true;
+                let descriptor = Object.getOwnPropertyDescriptor(Function.prototype, 'call');
+                if (descriptor && descriptor.value && descriptor.value.toString().includes('apply')) isTampered = true;
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                if (Function.prototype.call.toString() !== iframe.contentWindow.Function.prototype.call.toString()) isTampered = true;
+                document.body.removeChild(iframe);
+            } catch (e) {}
+            if (isTampered) {
+                typeChat("[ВНИМАНИЕ] Обнаружено вмешательство в скрипт сайта, возможен keyspoof");
+            }
+        }
+
         firstSymbolStatus = 0;
         modeChange = 0;
         captchaStatus = 0;
         captchaValid = 0;
         timeReact = '';
-        let cValue = document['getElementById']('megasuperbebra')['value'];
+        let cValue = document['getElementById'](_rId)['value'];
         let captchaTime = parseFloat(((Date.now() - captchaTimer) / 1000).toFixed(3))
         captchaData = cValue
         if (cType == 1) {
@@ -876,8 +894,8 @@
         };
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'none';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'none';
-        document['getElementById']('megasuperbebra')['value'] = null;
-        document['getElementById']('megasuperbebra')['disabled'] = true;
+        document['getElementById'](_rId)['value'] = null;
+        document['getElementById'](_rId)['disabled'] = true;
 
         let canvas = document.getElementById("captchaCanvas");
         let ctx = canvas.getContext("2d");
@@ -988,7 +1006,21 @@
         document['getElementById']('openControl')['style']['display'] = 'none'
     }
     
+    let _rId = 'id_' + Math.random().toString(36).substr(2, 9);
+
     window.onload = () => {
+        let container = document.getElementById('c_enter');
+        if (container) {
+            let realInput = document.createElement('input');
+            realInput.type = "text";
+            realInput.name = "text";
+            realInput.className = "c_inpt";
+            realInput.id = _rId;
+            realInput.autocomplete = "off";
+            realInput.disabled = true;
+            container.insertBefore(realInput, document.getElementById('send'));
+        }
+
         document.getElementById('openControl').onclick = controlOpen;
         document.getElementById('hideControl').onclick = controlHide;
         document.getElementById('modeN').onclick = modeN;
@@ -1090,7 +1122,7 @@
             }
         }
 
-        document.getElementById('megasuperbebra').oninput = firstTime;
+        document.getElementById(_rId).oninput = firstTime;
 
         String.prototype.slice = () => "cheat";
         String.prototype.replace = () => "cheat";

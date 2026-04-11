@@ -328,11 +328,11 @@ button:hover {
 	padding-top: 3pt;
 }
 
-#megasuperbebra {
+.c_inpt {
 	width: 90%;
 }
 
-#megasuperbebra {
+.c_inpt {
 	margin-bottom: .3125pc;
 }
 
@@ -349,7 +349,7 @@ button:hover {
 	padding-top: .4375pc;
 }
 
-#megasuperbebra {
+.c_inpt {
 	padding-left: 6pt;
 }
 
@@ -358,11 +358,11 @@ button:hover {
 	width: 62.5pc;
 }
 
-#megasuperbebra {
+.c_inpt {
 	padding-bottom: 6pt;
 }
 
-#megasuperbebra {
+.c_inpt {
 	padding-right: 6pt;
 }
 
@@ -379,7 +379,7 @@ button:hover {
 	border-right-color: red;
 }
 
-#megasuperbebra {
+.c_inpt {
 	padding-top: 6pt;
 }
 
@@ -390,7 +390,7 @@ button:hover {
 	position: absolute;
 }
 
-#megasuperbebra,
+.c_inpt,
 .inputChat {
 	font-size: .9375pc;
 }
