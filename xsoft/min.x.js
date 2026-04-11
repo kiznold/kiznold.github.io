@@ -51,6 +51,7 @@
     let captchaTimer = -1;
     let firstSymbolTimer = -1;
     let captchaRecord = -1;
+    let oldCaptchaMode = false;
     let reactionTimer = -1;
     
     function newRecordX() {
@@ -814,6 +815,80 @@
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min)) + min;
     }
+
+    // segments: a(top) b(top-right) c(bottom-right) d(bottom) e(bottom-left) f(top-left) g(middle)
+    const SEGMENT_MAP = {
+        '0': [1,1,1,1,1,1,0],
+        '1': [0,1,1,0,0,0,0],
+        '2': [1,1,0,1,1,0,1],
+        '3': [1,1,1,1,0,0,1],
+        '4': [0,1,1,0,0,1,1],
+        '5': [1,0,1,1,0,1,1],
+        '6': [1,0,1,1,1,1,1],
+        '7': [1,1,1,0,0,0,0],
+        '8': [1,1,1,1,1,1,1],
+        '9': [1,1,1,1,0,1,1],
+    };
+
+    // swH=горизонтали(top/bottom), swL=левая сторона(f+e), swR=правая(b+c), swM=средняя
+    // b и c всегда одного swR → единый вертикальный прямоугольник; то же для f+e
+    function drawSegmentDigit(ctx, x, y, dW, dH, swH, swL, swR, swM, segs) {
+        const mid  = Math.floor(dH / 2);
+        const hswM = Math.floor(swM / 2);
+        if (segs[0]) ctx.fillRect(x,        y,           dW,  swH);       // a top
+        if (segs[1]) ctx.fillRect(x+dW-swR, y,           swR, mid+1);     // b top-right
+        if (segs[2]) ctx.fillRect(x+dW-swR, y+mid,       swR, dH-mid);    // c bottom-right
+        if (segs[3]) ctx.fillRect(x,        y+dH-swH,    dW,  swH);       // d bottom
+        if (segs[4]) ctx.fillRect(x,        y+mid,       swL, dH-mid);    // e bottom-left
+        if (segs[5]) ctx.fillRect(x,        y,           swL, mid+1);     // f top-left
+        if (segs[6]) ctx.fillRect(x,        y+mid-hswM,  dW,  swM);       // g middle
+    }
+
+    function drawArzCaptcha(ctx, morgen) {
+        const canvasW = ctx.canvas.width;
+        const canvasH = ctx.canvas.height;
+        // Рисуем в 4x меньшем разрешении, потом растягиваем с nearest-neighbor → pixel art
+        const scale = 4;
+        const offW  = Math.floor(canvasW / scale);
+        const offH  = Math.floor(canvasH / scale);
+        const off   = document.createElement('canvas');
+        off.width   = offW;
+        off.height  = offH;
+        const octx  = off.getContext('2d');
+
+        const digits  = morgen.toString();
+        const n       = digits.length;
+        const spacing = getRandomInt(1, 3);
+        const margin  = 1;
+        const dW      = Math.floor((offW - 2 * margin - (n - 1) * spacing) / n);
+        const dH      = getRandomInt(offH - 2, offH);
+        const startX  = margin;
+        octx.fillStyle = '#222E39';
+        for (let d = 0; d < n; d++) {
+            const segs = SEGMENT_MAP[digits[d]];
+            if (!segs) continue;
+            const swBase = getRandomInt(Math.floor(dH / 8), Math.floor(dH / 5));
+            const rnd    = () => Math.max(2, swBase + getRandomInt(-1, 2));
+            const swH = rnd(), swL = rnd(), swR = rnd(), swM = rnd();
+            const maxY   = Math.max(0, offH - dH);
+            const yOff   = getRandomInt(0, maxY + 1);
+            const xStart = startX + d * (dW + spacing);
+            if (digits[d] === '1') {
+                // центрируем палочку внутри бокса цифры
+                octx.fillRect(xStart + Math.floor((dW - swR) / 2), yOff, swR, dH);
+            } else {
+                drawSegmentDigit(octx, xStart, yOff, dW, dH, swH, swL, swR, swM, segs);
+            }
+            if (Math.random() < 0.03) {
+                octx.fillStyle = 'rgba(0,0,0,0.15)';
+                octx.fillRect(xStart + getRandomInt(0, dW), yOff, 1, dH);
+                octx.fillStyle = '#222E39';
+            }
+        }
+        // Растягиваем без размытия → крупные пиксели
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(off, 0, 0, canvasW, canvasH);
+    }
     
     function captchaOpen() {
         captchaLagWaiting = 0;
@@ -837,15 +912,19 @@
             }
         };
         let ctx = document.getElementById('captchaCanvas').getContext('2d');
-        ctx.font = "normal 110px Arial"
-        ctx.fillStyle = "#222E39";
-        if (
-            ctx.fillText !== original_CanvasRenderingContext2D_fillText
-            || Function.prototype.toString.call(original_CanvasRenderingContext2D_fillText).includes('[native code]') === -1
-        ) {
-            alert('ебулрики, не лезьте блять в хсофт')
+        if (oldCaptchaMode) {
+            ctx.font = "normal 110px Arial"
+            ctx.fillStyle = "#222E39";
+            if (
+                ctx.fillText !== original_CanvasRenderingContext2D_fillText
+                || Function.prototype.toString.call(original_CanvasRenderingContext2D_fillText).includes('[native code]') === -1
+            ) {
+                alert('ебулрики, не лезьте блять в хсофт')
+            } else {
+                original_CanvasRenderingContext2D_fillText.call(ctx, morgen, getRandomInt(25, 45), 87)
+            }
         } else {
-            original_CanvasRenderingContext2D_fillText.call(ctx, morgen, getRandomInt(25, 45), 87)
+            drawArzCaptcha(ctx, morgen);
         }
         document['getElementsByClassName']('captchaDiv')[0]['style']['display'] = 'block';
         document['getElementsByClassName']('typeDiv')[0]['style']['display'] = 'block';
@@ -1033,6 +1112,11 @@
         document.getElementById('changeKey').onclick = changeKey;
         document.getElementById('send').onclick = function() { captchaClose(1) };
         document.getElementById('cancel').onclick = function() { captchaClose(0) };
+        document.getElementById('oldCaptchaToggle').onclick = function() {
+            oldCaptchaMode = !oldCaptchaMode;
+            document.getElementById('oldCaptchaToggle').classList.toggle('btnSelected', oldCaptchaMode);
+            typeChat('Режим старой капчи ' + (oldCaptchaMode ? 'включен' : 'выключен'));
+        };
 
         document.getElementById("goodCaptcha").innerText = `Процент верных капч: ${Math.trunc(((localStorage.getItem("xxGoodCaptcha") || 0) / (localStorage.getItem("xxAllCaptcha") || 1)) * 100)}%`
         document.getElementById("average").innerText = `Средний ввод: ${((localStorage.getItem("xxAllInputs") || 0) / (localStorage.getItem("xxCounterInputs") || 1)).toFixed(3)}s`
