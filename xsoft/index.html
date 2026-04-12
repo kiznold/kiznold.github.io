@@ -57,7 +57,7 @@
 	<div class="container">
 		<div class="chat" id="chatVisible">
 			<div class="pages">
-				<textarea rows="20" cols="45" id="chatArea" readonly=""></textarea>
+				<div id="chatArea" aria-live="polite"></div>
 			</div>
 			<div class="typeChat"><input type="text" name="text" id="chatInpt" class="inputChat" disabled></div>
 		</div>
@@ -122,6 +122,25 @@
 		<div id="record">New record <br><span id="recordS">2.01s</span></div>
 	</div>
 	<div class="rights"><a href='https://vk.com/kizn_scripts'>mirror by kizn // original author josip</a></div>
+	<div id="bgControlWrap">
+		<button id="bgToggleBtn" type="button">Изменить фон</button>
+		<div id="bgControlPanel" style="display:none;">
+			<span id="bgCloseBtn" role="button" tabindex="0" aria-label="Закрыть"></span>
+			<div class="bgModeRow">
+				<label><input type="radio" name="bgMode" id="bgModeColor" value="color"> Цвет</label>
+				<input type="color" id="bgColorPicker" value="#2f2f2f">
+			</div>
+			<div class="bgModeRow">
+				<label><input type="radio" name="bgMode" id="bgModeUrl" value="url"> URL</label>
+				<input type="text" id="bgUrlInput" placeholder="https://example.com/bg.jpg">
+			</div>
+			<div class="bgModeRow" id="bgUrlDarknessRow">
+				<label for="bgUrlDarkness">Затемнение</label>
+				<input type="range" id="bgUrlDarkness" min="0" max="0.9" step="0.05" value="0.5">
+				<span id="bgUrlDarknessValue">50%</span>
+			</div>
+		</div>
+	</div>
 	<script src="uglymin.x.js"></script>
 	<div id="camera">
     <video id="video">Video stream not available.</video>

@@ -1047,3 +1047,213 @@ button {
     transition-duration: .3s;
     color: white;
 }
+
+/* Background customization panel */
+#bgControlWrap {
+	position: fixed;
+	right: 1rem;
+	bottom: 1rem;
+	z-index: 9999;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: .5rem;
+}
+
+#bgToggleBtn {
+	background: rgba(28, 34, 41, .92);
+	color: #fff;
+	border: 1px solid rgba(120, 148, 165, .65);
+	border-radius: 8px;
+	padding: .45rem .75rem;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+#bgToggleBtn:hover {
+	background: rgba(36, 44, 53, .98);
+}
+
+#bgControlPanel {
+	position: relative;
+	width: min(330px, calc(100vw - 2rem));
+	background: rgba(28, 34, 41, .96);
+	border: 1px solid rgba(120, 148, 165, .6);
+	border-radius: 10px;
+	padding: 1.55rem .75rem .75rem;
+	backdrop-filter: blur(4px);
+	color: #fff;
+}
+
+#bgCloseBtn {
+	position: absolute;
+	top: .3rem;
+	right: .45rem;
+	z-index: 2;
+	width: 22px;
+	height: 22px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	color: #fff;
+	cursor: pointer;
+	font-size: 0;
+	user-select: none;
+}
+
+#bgCloseBtn::before {
+	content: '\00D7';
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 1;
+}
+
+#bgCloseBtn:hover {
+	color: #ff9a9a;
+}
+
+.bgModeRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: .5rem;
+	margin-bottom: .45rem;
+}
+
+.bgModeRow:last-child {
+	margin-bottom: 0;
+}
+
+.bgModeRow label {
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+#bgColorPicker {
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	border: 1px solid rgba(120, 148, 165, .65);
+	border-radius: 6px;
+	background: transparent;
+	appearance: none;
+	-webkit-appearance: none;
+	cursor: pointer;
+}
+
+#bgColorPicker::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+#bgColorPicker::-webkit-color-swatch {
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#bgColorPicker::-moz-color-swatch {
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#bgUrlInput {
+	width: 200px;
+	max-width: 58%;
+	padding: .3rem .45rem;
+	border-radius: 6px;
+	border: 1px solid rgba(255, 255, 255, .35);
+	background: rgba(20, 20, 20, .92);
+	color: #fff;
+	font-size: 12px;
+}
+
+#bgUrlDarkness {
+	flex: 1;
+	min-width: 90px;
+}
+
+#bgUrlDarknessValue {
+	font-size: 11px;
+	min-width: 36px;
+	text-align: right;
+}
+
+/* Control panel refresh */
+#control {
+	background: rgba(28, 34, 41, .95);
+	border-radius: 12px;
+	padding: .5rem;
+	overflow: hidden;
+}
+
+#control hr {
+	border: 0;
+	border-top: 1px solid rgba(120, 148, 165, .55);
+	margin: .45rem -9999px;
+	padding: 0 9999px;
+	width: auto;
+}
+
+#hideControl {
+	position: absolute;
+	top: .25rem;
+	left: .45rem;
+	width: 20px;
+	height: 20px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0;
+	line-height: 1;
+	color: #fff;
+	cursor: pointer;
+	user-select: none;
+	z-index: 2;
+}
+
+#hideControl::before {
+	content: '\00D7';
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1;
+}
+
+#hideControl:hover {
+	color: #ff9a9a;
+}
+
+#headlineControl {
+	margin-top: .2rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+#changeKey,
+[id~=changeKey] {
+	position: static;
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	background: rgba(28, 34, 41, .92);
+	border: 0;
+	border-radius: 10px;
+	margin-top: 0;
+	padding: .42rem .4rem;
+	transition: background .2s ease;
+}
+
+#changeKey::before,
+[id~=changeKey]::before {
+	content: '';
+	display: block;
+	height: 1px;
+	background: rgba(120, 148, 165, .55);
+	margin: -.1rem -9999px .45rem;
+	padding: 0 9999px;
+}
+
+[id~=changeKey]:hover {
+	background: rgba(36, 44, 53, .98);
+}
