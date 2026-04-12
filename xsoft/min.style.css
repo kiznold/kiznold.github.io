@@ -1257,3 +1257,11 @@ button {
 [id~=changeKey]:hover {
 	background: rgba(36, 44, 53, .98);
 }
+
+.chat-warning {
+	color: rgb(255, 74, 74);
+}
+
+.chat-record {
+	color: rgb(242, 206, 112);
+}
